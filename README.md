@@ -16,7 +16,7 @@ A 2D engine that I started working on in March 2017. It currently only uses the 
 * Sound rework
 * Rewrite Mya.h/.cpp to make having multiple or no windows possible in lua environment
 
-$ Dependencies
+# Dependencies
 Here are the libs I use, I will complete this list properly later as its been years since I have actually messed with these and I forgot what I use...
 
 ```
