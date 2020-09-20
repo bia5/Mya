@@ -1,0 +1,5 @@
+build_linux/
+build_windows/
+lib/
+linux_lib/
+windows_lib/

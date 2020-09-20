@@ -1,0 +1,1 @@
+g++ -std=c++17 ./Mya/Main.cpp ./Mya/Mya/* ./Mya/Wrappers/* -I./lib/include -I./linux_lib/include -L./linux_lib/lib -w -Wl,--no-as-needed -ldl -lSDL2 -llua -o ./build_linux/Mya
