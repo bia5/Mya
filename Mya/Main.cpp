@@ -17,6 +17,8 @@ int main(int argc, char* argv[]){
     }
     mya.onExit();
 
+    //TODO catch if lua is still loaded...
+
     std::cout << "Exiting main c++!\n";
     return 0;
 }

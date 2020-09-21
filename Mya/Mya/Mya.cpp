@@ -3,7 +3,7 @@
 char __BUILD_NUMBER;
 
 Mya::Mya(){
-	std::cout << +__BUILD_NUMBER << "\n";
+	std::cout << "Build Number: " << +__BUILD_NUMBER << "\n";
 	VERSION = "Mya v"+std::to_string(VERSION_PRIMARY)+"."+std::to_string(VERSION_SECONDARY)+"."+std::to_string(VERSION_TERTIARY)+" "+VERSION_CODENAME;
 	std::cout << "Launching "+VERSION+"!\n";
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -37,7 +37,7 @@ bool Mya::initGraphics(){
 			if(vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS) {
 				run = true;
 			} else {
-				std::cout << "ERROR: Mya::initGraphics(): failed to create vk instance!";
+				std::cout << "ERROR: Mya::initGraphics(): failed to create vk instance!\n";
 			}
 		}
 	}
