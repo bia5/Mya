@@ -7,8 +7,6 @@
 #include <SDL2/SDL_vulkan.h>
 #include <vulkan/vulkan.h>
 
-extern "C" char __BUILD_NUMBER;
-
 class Mya{
 public:
     Mya();
@@ -36,7 +34,7 @@ private:
     //Easy to edit variables <3
     const short VERSION_PRIMARY = 2;
     const short VERSION_SECONDARY = 0;
-    long VERSION_TERTIARY = 0;
+    const short VERSION_TERTIARY = 0;
     const std::string VERSION_CODENAME = "RIOT";
     std::string VERSION = "MYA UNDEFINED";
     std::string WINDOW_NAME = "WINDOW_NAME";

@@ -1,5 +1,7 @@
 #include "LuaWrap.h"
 
+//TODO Bind Lua
+
 LuaWrap::LuaWrap(){
 	lua.open_libraries();
 	std::cout << "Testing Lua Wrapper: ";

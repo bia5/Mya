@@ -1,9 +1,6 @@
 #include "Mya.h"
 
-char __BUILD_NUMBER;
-
 Mya::Mya(){
-	std::cout << "Build Number: " << +__BUILD_NUMBER << "\n";
 	VERSION = "Mya v"+std::to_string(VERSION_PRIMARY)+"."+std::to_string(VERSION_SECONDARY)+"."+std::to_string(VERSION_TERTIARY)+" "+VERSION_CODENAME;
 	std::cout << "Launching "+VERSION+"!\n";
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -24,21 +21,26 @@ bool Mya::initGraphics(){
 			VkInstanceCreateInfo createInfo{};
 			createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 			createInfo.pApplicationInfo = &appInfo;
-			//Copied from SDL's website
-			uint32_t extensionCount;
-			SDL_Vulkan_GetInstanceExtensions(window, &extensionCount, nullptr);
+			uint32_t extensionCount = 0;
+			if(!SDL_Vulkan_GetInstanceExtensions(window, &extensionCount, nullptr)) 
+				std::cout << "ERROR: Mya::initGraphics(): SDL_getExtensions (1)\n";
 			std::vector<const char *> extensionNames(extensionCount);
-			SDL_Vulkan_GetInstanceExtensions(window, &extensionCount, extensionNames.data());
-			createInfo.enabledExtensionCount = extensionNames.size();
+			if(!SDL_Vulkan_GetInstanceExtensions(window, &extensionCount, extensionNames.data())) 
+				std::cout << "RROR: Mya::initGraphics(): SDL_getExtensions (2)\n";
+			createInfo.enabledExtensionCount = static_cast<uint32_t>(extensionNames.size());
 			createInfo.ppEnabledExtensionNames = extensionNames.data();
-			//End of Copy
 			createInfo.enabledLayerCount = 0;
-
-			if(vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS) {
-				run = true;
-			} else {
+			if(vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS)
 				std::cout << "ERROR: Mya::initGraphics(): failed to create vk instance!\n";
+			extensionCount = 0;
+			vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
+			std::vector<VkExtensionProperties> extensions(extensionCount);
+			vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, extensions.data());
+			std::cout << "available extensions:\n";
+			for (const auto& extension : extensions) {
+				std::cout << '\t' << extension.extensionName << '\n';
 			}
+			run = true;
 		}
 	}
 	return false;

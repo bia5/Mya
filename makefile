@@ -15,7 +15,7 @@ else ifeq ($(UNAME_S),MSYS_NT-10.0)
 	OUTPUT = ./build_windows/Mya
 endif
 
-mya: $(BUILD_NUMBER_FILE)
+mya:
 	$(CC) $(CFLAGS) $(INCLUDE) $(INCLUDES) $(LIBS) $(LDFLAGS) -o $(OUTPUT)
 
 run: 
