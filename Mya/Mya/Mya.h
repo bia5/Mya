@@ -3,9 +3,18 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <optional>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_vulkan.h>
 #include <vulkan/vulkan.h>
+
+struct QueueFamilyIndices {
+	 std::optional<uint32_t> graphicsFamily;
+
+     bool isComplete(){
+         return graphicsFamily.has_value();
+     }
+};
 
 class Mya{
 public:
@@ -48,4 +57,8 @@ private:
     //VULKAN VARIABLES
     SDL_Window* window;
     VkInstance instance;
+    VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
+
+    bool isGPUCompat(VkPhysicalDevice gpu);
+    QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
 };

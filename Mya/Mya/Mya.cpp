@@ -36,10 +36,22 @@ bool Mya::initGraphics(){
 			vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
 			std::vector<VkExtensionProperties> extensions(extensionCount);
 			vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, extensions.data());
-			std::cout << "available extensions:\n";
-			for (const auto& extension : extensions) {
-				std::cout << '\t' << extension.extensionName << '\n';
+			for (const auto& extension : extensions) { }
+			uint32_t gpuCount = 0;
+			vkEnumeratePhysicalDevices(instance, &gpuCount, nullptr);
+			if(gpuCount == 0)
+				std::cout << "ERROR: Failed to find any GPUs with Vulkan support!\n";
+			std::vector<VkPhysicalDevice> gpus(gpuCount);
+			vkEnumeratePhysicalDevices(instance, &gpuCount, gpus.data());
+			for (const auto& gpu : gpus) {
+				if (isGPUCompat(gpu)) {
+					physicalDevice = gpu;
+					break;
+				}
 			}
+			if (physicalDevice == VK_NULL_HANDLE)
+				std::cout << "ERROR: Failed to find a suitable GPU!\n";
+
 			run = true;
 		}
 	}
@@ -79,4 +91,37 @@ void Mya::setAppVersion(short x, short y, short z){
 
 const char Mya::getOS(){
 	return *SDL_GetPlatform();
+}
+
+bool Mya::isGPUCompat(VkPhysicalDevice gpu){
+	QueueFamilyIndices indices = findQueueFamilies(gpu);
+	VkPhysicalDeviceProperties deviceProperties;
+	VkPhysicalDeviceFeatures deviceFeatures;
+	vkGetPhysicalDeviceProperties(gpu, &deviceProperties);
+	vkGetPhysicalDeviceFeatures(gpu, &deviceFeatures);
+	bool compat = true;
+
+	if(!indices.isComplete())
+		compat = false;
+
+	return compat;
+}
+
+QueueFamilyIndices Mya::findQueueFamilies(VkPhysicalDevice device){
+	QueueFamilyIndices indices;
+	uint32_t queueFamilyCount = 0;
+	vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
+	std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
+	vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, queueFamilies.data());
+
+	int i = 0;
+	for(const auto& queueFamily : queueFamilies) {
+		if(queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT)
+			indices.graphicsFamily = i;
+		if(indices.isComplete())
+			break;
+		i++;
+	}
+
+	return indices;
 }
