@@ -58,6 +58,7 @@ private:
     SDL_Window* window;
     VkInstance instance;
     VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
+    VkDevice device;
 
     bool isGPUCompat(VkPhysicalDevice gpu);
     QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);

@@ -36,22 +36,47 @@ bool Mya::initGraphics(){
 			vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
 			std::vector<VkExtensionProperties> extensions(extensionCount);
 			vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, extensions.data());
-			for (const auto& extension : extensions) { }
+			//Might need this for later?
+			//for (const auto& extension : extensions) { }
 			uint32_t gpuCount = 0;
 			vkEnumeratePhysicalDevices(instance, &gpuCount, nullptr);
 			if(gpuCount == 0)
 				std::cout << "ERROR: Failed to find any GPUs with Vulkan support!\n";
 			std::vector<VkPhysicalDevice> gpus(gpuCount);
 			vkEnumeratePhysicalDevices(instance, &gpuCount, gpus.data());
-			for (const auto& gpu : gpus) {
+			for(const auto& gpu : gpus) {
 				if (isGPUCompat(gpu)) {
 					physicalDevice = gpu;
 					break;
 				}
 			}
-			if (physicalDevice == VK_NULL_HANDLE)
+			if(physicalDevice == VK_NULL_HANDLE)
 				std::cout << "ERROR: Failed to find a suitable GPU!\n";
-
+			QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
+			VkDeviceQueueCreateInfo queueCreateInfo{};
+			queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+			queueCreateInfo.queueFamilyIndex = indices.graphicsFamily.value();
+			queueCreateInfo.queueCount = 1;
+			float queuePriority = 1.0f;
+			queueCreateInfo.pQueuePriorities = &queuePriority;
+			VkPhysicalDeviceFeatures deviceFeatures{};
+			VkDeviceCreateInfo logicalCreateInfo{};
+			logicalCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+			logicalCreateInfo.pQueueCreateInfos = &queueCreateInfo;
+			logicalCreateInfo.queueCreateInfoCount = 1;
+			logicalCreateInfo.pEnabledFeatures = &deviceFeatures;
+			logicalCreateInfo.enabledExtensionCount = 0;
+			//Not needed for modern versions of Vulkan :) //Might fix later though...
+			//if(enableValidationLayers) {
+				//logicalCreateInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
+				//logicalCreateInfo.ppEnabledLayerNames = validationLayers.data();
+			//}else
+			logicalCreateInfo.enabledLayerCount = 0;
+			if(vkCreateDevice(physicalDevice, &logicalCreateInfo, nullptr, &device) != VK_SUCCESS)
+    			std::cout << "ERROR: Failed to create logical device!\n";
+			//I saw this at the end of the tutorial and didnt know what to do with this lol
+			//VkQueue graphicsQueue;
+			//vkGetDeviceQueue(device, indices.graphicsFamily.value(), 0, &graphicsQueue);
 			run = true;
 		}
 	}
@@ -71,6 +96,7 @@ void Mya::update(){
 
 void Mya::onExit(){
 	std::cout << "Mya shutting down!\n";
+	vkDestroyDevice(device, nullptr);
 	vkDestroyInstance(instance, nullptr);
 	SDL_DestroyWindow(window);
 }
