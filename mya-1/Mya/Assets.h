@@ -2,9 +2,9 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 
-#include "Font.h"
-#include "Texture.h"
+#include "Graphics/Texture.h"
 class Mya;
 
 class Object {
@@ -16,13 +16,12 @@ public:
 class Assets {
 public:
 	Mya* mya;
-	std::vector<Object> textures;
-	Font* font;
+	std::vector<Object*> textures;
 
 	Assets(Mya*);
 
-	void loadTexture(std::string id, std::string pathAccordingToExec);
+	bool loadTexture(std::string id, std::string pathAccordingToExec);
 	Texture* getTexture(std::string);
-	Font getFont();
+
 	int getTotalAssets();
 };

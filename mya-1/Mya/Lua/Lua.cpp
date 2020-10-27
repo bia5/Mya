@@ -1,15 +1,15 @@
 #include "Lua.h"
 
 #include "../Mya.h"
-#include "../Graphics/Assets.h"
+#include "../Assets.h"
 #include "../Graphics/Texture.h"
 #include "../Network/Network.h"
 #include "../Graphics/Sprite.h"
 #include "../Graphics/Font.h"
 #include "../Graphics/TextView.h"
-#include "../Utils/FileSystemHelper.h"
 #include "../Sound/Sound.h"
 #include "../Sound/Music.h"
+#include "../Graphics/Animation.h"
 
 Lua::Lua() {
 	lua.open_libraries();
@@ -72,7 +72,6 @@ void Lua::loadGraphics() {
 		sol::constructors<Assets(Mya*)>(),
 		"loadTexture", &Assets::loadTexture,
 		"getTexture", &Assets::getTexture,
-		"getFont", &Assets::getFont,
 		"getTotalAssets", &Assets::getTotalAssets);
 
 	lua.new_usertype<Sprite>("Sprite",
@@ -104,10 +103,14 @@ void Lua::loadGraphics() {
 		"getWidth", &TextView::getWidth,
 		"getHeight", &TextView::getHeight);
 
-	lua.new_usertype<FileSystemHelper>("FileSystemHelper",
-		sol::constructors<FileSystemHelper()>(),
-		"getAllFoldersInADirectory", &FileSystemHelper::getAllFoldersInADirectory,
-		"getAllFilesInADirectory", &FileSystemHelper::getAllFilesInADirectory);
+	lua.new_usertype<Animation>("Animation",
+		sol::constructors<Animation(std::string, int, int, Assets*)>(),
+		"render", &Animation::lua_render,
+		"renderFlip", &Animation::lua_renderFlip,
+		"renderDefault", &Animation::lua_renderDefault,
+		"setFrame", &Animation::setFrame,
+		"setTexID", &Animation::setTexID,
+		"setFPS", &Animation::setFPS);
 }
 
 void Lua::loadNetwork() {

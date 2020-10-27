@@ -11,6 +11,7 @@ public:
 	Texture* tex;
 	bool canRRender = false;
 	bool renderBounds = false;
+	bool autoSetBounds = true;
 
 	Sprite(Texture*);
 
@@ -34,13 +35,12 @@ public:
 	void setOutlineColor(int, int, int, int);
 
 	//Lua Compat
-	void lua_render(void*, int, int);
-	void lua_renderFlip(void*, int, int, bool);
-	void lua_renderDefault(void*);
+	virtual void lua_render(void*, int, int);
+	virtual void lua_renderFlip(void*, int, int, bool);
+	virtual void lua_renderDefault(void*);
 	bool isColliding(Sprite);
 	bool isPointColliding(int, int);
 	bool isPointInRect(float x, float y, float, float, float, float);
 
 private:
-	bool autoSetBounds = true;
 };

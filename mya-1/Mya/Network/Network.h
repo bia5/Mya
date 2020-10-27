@@ -57,7 +57,6 @@ public:
 
 	time_t start;
 	long long ping;
-	std::chrono::time_point<std::chrono::steady_clock> pingTimer;
 
 	Network();
 

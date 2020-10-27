@@ -1,28 +1,50 @@
-#include "Sprite.h"
+#include "Animation.h"
 
-Sprite::Sprite(Texture* texture) {
-	if (texture != NULL)
-		canRRender = true;
-	else
-		canRRender = false;
-	tex = texture;
+#pragma warning( disable : 4244 ) 
+
+Animation::Animation(std::string texid, int framess, int fpss, Assets* ass) : Sprite(NULL){
+	assets = ass;
+	fps = fpss;
+	texID = texid;
+	frames = framess;
+	for (int i = 0; i < frames; i++) { // For debug purposes :)
+		if (assets->getTexture(texID+std::to_string(i)) == NULL)
+			std::cout << "ERROR: Asset Missing: "+ texID + std::to_string(i) +"\n";
+	}
+
+	timepertick = 1000 / fps;
+	tex = assets->getTexture(texID + std::to_string(frame));
+	timer = std::clock();
+	canRRender = true;
 }
 
-void Sprite::setTexture(Texture* texture) {
-	if (texture != NULL)
-		canRRender = true;
-	else
-		canRRender = false;
-	tex = texture;
+void Animation::setFrame(int f)
+{
+	frame = f;
 }
 
-void Sprite::destroy() {
-	tex->destroy();
+void Animation::setTexID(std::string id)
+{
+	texID = id;
 }
 
-void Sprite::update() {}
+void Animation::setFPS(int f)
+{
+	fps = f;
+	timepertick = 1000 / fps;
+}
 
-void Sprite::render(SDL_Renderer* renderer) {
+void Animation::render(SDL_Renderer* renderer) {
+	overall += (std::clock() - timer);
+	while (overall >= timepertick) {
+		overall -= timepertick;
+		frame++;
+		if (frame > frames)
+			frame = 0;
+		tex = assets->getTexture(texID + std::to_string(frame));
+	}
+	timer = std::clock();
+
 	SDL_Rect a;
 	a.x = x;
 	a.y = y;
@@ -44,7 +66,17 @@ void Sprite::render(SDL_Renderer* renderer) {
 	}
 }
 
-void Sprite::render(SDL_Renderer* renderer, int w, int h) {
+void Animation::render(SDL_Renderer* renderer, int w, int h) {
+	overall += (std::clock() - timer);
+	while (overall >= timepertick) {
+		overall -= timepertick;
+		frame++;
+		if (frame > frames)
+			frame = 0;
+		tex = assets->getTexture(texID + std::to_string(frame));
+	}
+	timer = std::clock();
+
 	SDL_Rect a;
 	a.x = x;
 	a.y = y;
@@ -66,7 +98,17 @@ void Sprite::render(SDL_Renderer* renderer, int w, int h) {
 	}
 }
 
-void Sprite::render(SDL_Renderer* renderer, int w, int h, bool f) {
+void Animation::render(SDL_Renderer* renderer, int w, int h, bool f) {
+	overall += (std::clock() - timer);
+	while (overall >= timepertick) {
+		overall -= timepertick;
+		frame++;
+		if (frame > frames)
+			frame = 0;
+		tex = assets->getTexture(texID + std::to_string(frame));
+	}
+	timer = std::clock();
+
 	SDL_Rect a;
 	a.x = x;
 	a.y = y;
@@ -92,7 +134,17 @@ void Sprite::render(SDL_Renderer* renderer, int w, int h, bool f) {
 	}
 }
 
-void Sprite::renderWithBounds(SDL_Renderer* renderer) {
+void Animation::renderWithBounds(SDL_Renderer* renderer) {
+	overall += (std::clock() - timer);
+	while (overall >= timepertick) {
+		overall -= timepertick;
+		frame++;
+		if (frame > frames)
+			frame = 0;
+		tex = assets->getTexture(texID + std::to_string(frame));
+	}
+	timer = std::clock();
+
 	w = bounds.w;
 	h = bounds.h;
 	if (canRRender) {
@@ -106,52 +158,17 @@ void Sprite::renderWithBounds(SDL_Renderer* renderer) {
 	}
 }
 
-void Sprite::setBounds(SDL_Rect b) {
-	bounds = b;
-}
+void Animation::lua_render(void* rrenderer, int w, int h) {
+	overall += (std::clock() - timer);
+	while (overall >= timepertick) {
+		overall -= timepertick;
+		frame++;
+		if (frame > frames)
+			frame = 0;
+		tex = assets->getTexture(texID + std::to_string(frame));
+	}
+	timer = std::clock();
 
-SDL_Rect Sprite::getBounds() {
-	return bounds;
-}
-
-void Sprite::setAutoBounds(bool b) {
-	autoSetBounds = b;
-}
-
-void Sprite::setX(float _x)
-{
-	x = _x;
-}
-
-void Sprite::setY(float _y)
-{
-	y = _y;
-}
-
-int Sprite::getX()
-{
-	return x;
-}
-
-int Sprite::getY()
-{
-	return y;
-}
-
-void Sprite::setRenderOutline(bool yeet)
-{
-	renderBounds = yeet;
-}
-
-void Sprite::setOutlineColor(int a, int b, int c, int d)
-{
-	outlineColor1 = a;
-	outlineColor2 = b;
-	outlineColor3 = c;
-	outlineColor4 = d;
-}
-
-void Sprite::lua_render(void* rrenderer, int w, int h) {
 	SDL_Renderer* renderer = (SDL_Renderer*)rrenderer;
 
 	SDL_Rect a;
@@ -175,7 +192,17 @@ void Sprite::lua_render(void* rrenderer, int w, int h) {
 	}
 }
 
-void Sprite::lua_renderFlip(void* rrenderer, int w, int h, bool f) {
+void Animation::lua_renderFlip(void* rrenderer, int w, int h, bool f) {
+	overall += (std::clock() - timer);
+	while (overall >= timepertick) {
+		overall -= timepertick;
+		frame++;
+		if (frame > frames)
+			frame = 0;
+		tex = assets->getTexture(texID + std::to_string(frame));
+	}
+	timer = std::clock();
+
 	SDL_Renderer* renderer = (SDL_Renderer*)rrenderer;
 
 	SDL_Rect a;
@@ -203,7 +230,17 @@ void Sprite::lua_renderFlip(void* rrenderer, int w, int h, bool f) {
 	}
 }
 
-void Sprite::lua_renderDefault(void* rrenderer) {
+void Animation::lua_renderDefault(void* rrenderer) {
+	overall += (std::clock() - timer);
+	while (overall >= timepertick) {
+		overall -= timepertick;
+		frame++;
+		if (frame > frames)
+			frame = 0;
+		tex = assets->getTexture(texID + std::to_string(frame));
+	}
+	timer = std::clock();
+
 	SDL_Renderer* renderer = (SDL_Renderer*)rrenderer;
 
 	SDL_Rect a;
@@ -225,35 +262,4 @@ void Sprite::lua_renderDefault(void* rrenderer) {
 			SDL_SetRenderDrawColor(renderer, 0, 0, 69, 0);
 		}
 	}
-}
-
-bool Sprite::isColliding(Sprite spr) {
-	if (isPointInRect(x, y, spr.x, spr.y, spr.w, spr.h) ||
-		isPointInRect(x + w, y, spr.x, spr.y, spr.w, spr.h) ||
-		isPointInRect(x, y + h, spr.x, spr.y, spr.w, spr.h) ||
-		isPointInRect(x + w, y + h, spr.x, spr.y, spr.w, spr.h)) {
-		return true;
-	}
-
-	return false;
-}
-
-bool Sprite::isPointColliding(int x, int y) {
-	if (x > this->x && x < (this->x + w)) {
-		if (y > this->y && y < (this->y + h)) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-bool Sprite::isPointInRect(float x, float y, float rx, float ry, float rw, float rh) {
-	if (x > rx && x < (rx + rw)) {
-		if (y > ry && y < (ry + rh)) {
-			return true;
-		}
-	}
-
-	return false;
 }

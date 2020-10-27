@@ -73,9 +73,7 @@ std::vector<ClientMessage> Network::update() {
 				if (data == MESSAGE_PING)
 					sendMessage(MESSAGE_PEW, packets[i]->address);
 				else if (data == MESSAGE_PEW) {
-					std::chrono::time_point<std::chrono::steady_clock> end = std::chrono::high_resolution_clock::now();
-					std::chrono::nanoseconds dur = end - pingTimer;
-					ping = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
+					ping = -1;
 					if (DEBUG)
 						std::cout << "PING: " << ping << std::endl;
 				}
@@ -151,9 +149,7 @@ void Network::lua_update(void* m)
 				if (data == MESSAGE_PING)
 					sendMessage(MESSAGE_PEW, packets[i]->address);
 				else if (data == MESSAGE_PEW) {
-					std::chrono::time_point<std::chrono::steady_clock> end = std::chrono::high_resolution_clock::now();
-					std::chrono::nanoseconds dur = end - pingTimer;
-					ping = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
+					ping = -1;
 					if (DEBUG)
 						std::cout << "PING: " << ping << std::endl;
 				}
@@ -251,7 +247,6 @@ void Network::refreshIP() {
 void Network::refreshPing(IPaddress ip) {
 	if (hasInit) {
 		sendMessage(MESSAGE_PING, ip);
-		pingTimer = std::chrono::high_resolution_clock::now();
 	}
 }
 

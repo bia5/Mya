@@ -39,6 +39,7 @@ bool Mya::init(std::string title, int w, int h) {
 	}
 	else {
 		window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+		//GPU_SetInitWindow(SDL_GetWindowID(window));
 		if (window == NULL) {
 			std::cout << "Error IN Mya::init, with SDL_CreateWindow: " << SDL_GetError() << std::endl;
 			run = false;

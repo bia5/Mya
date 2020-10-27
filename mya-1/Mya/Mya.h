@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+//#include <SDL_gpu.h>
 #include <SDL.h>
 #undef main
 #include <SDL_net.h>
@@ -11,12 +12,12 @@
 
 #include "Utils/FPS.h"
 #include "Utils/Timer.h"
-#include "Graphics/Assets.h"
+#include "Assets.h"
 #include "Lua/Lua.h"
 
 class Mya {
 public:
-	const char* VERSION = "Mya 1.3.5 Beta (Codename: Leah)";
+	const char* VERSION = "Mya 1.4 Beta (Codename: Jisoo)";
 	static Assets* assets;
 	static Lua* lua;
 
