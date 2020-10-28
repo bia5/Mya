@@ -17,7 +17,7 @@
 
 class Mya {
 public:
-	const char* VERSION = "Mya 1.4 Beta (Codename: Jisoo)";
+	const char* VERSION = "Mya 1.4.1 Beta (Codename: Jisoo)";
 	static Assets* assets;
 	static Lua* lua;
 
@@ -51,6 +51,8 @@ public:
 	int getFps();
 	bool getIsServer();
 	Assets* getAssets();
+	void setUPS(int);
+	int getUPS();
 
 	//Lua Compat
 	void* lua_getRenderer();
@@ -62,4 +64,9 @@ private:
 
 	static bool run;
 	static bool fullscreen;
+
+	std::clock_t timer; //To help keep track of milliseconds since last update :D
+	int overall; //Combine all time to keep everything balanced, like all things should be
+	int timepertick = 33; // How long does the timer have until we call another update
+	int ups = 60; //how many times per second to call update
 };

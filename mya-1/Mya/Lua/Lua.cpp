@@ -43,6 +43,8 @@ void Lua::loadMya(Mya* mya) {
 	lua.set_function("mya_getHeight", &Mya::getHeight, mya);
 	lua.set_function("mya_getPath", &Mya::getPath, mya);
 	lua.set_function("mya_setRenderDrawColor", &Mya::setRenderDrawColor, mya);
+	lua.set_function("mya_setUPS", &Mya::setUPS, mya);
+	lua.set_function("mya_getUPS", &Mya::getUPS, mya);
 }
 
 void Lua::loadMya_t() { //This is kinda useless... This needs a revison!

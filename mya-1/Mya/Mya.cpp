@@ -45,7 +45,7 @@ bool Mya::init(std::string title, int w, int h) {
 			run = false;
 		}
 		else {
-			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 			if (!renderer) {
 				std::cout << "Error IN Mya::init, with SDL_CreateRenderer: " << SDL_GetError() << std::endl;
 				run = false;
@@ -64,6 +64,8 @@ bool Mya::init(std::string title, int w, int h) {
 					assets = new Assets(this);
 					//lua->lua["assets"] = assets;
 
+					timepertick = 1000 / ups;
+					timer = std::clock();
 					SDL_StartTextInput();
 					std::cout << "Sucessfully started " << VERSION << "!" << std::endl;
 					
@@ -76,6 +78,13 @@ bool Mya::init(std::string title, int w, int h) {
 }
 
 void Mya::update() {
+	overall += (std::clock() - timer);
+	while (overall >= timepertick) {
+		overall -= timepertick;
+		lua->exec("if event_tupdate ~= nil then event_tupdate() end");
+	}
+	timer = std::clock();
+
 	deltaTimer.start();
 	SDL_Event e;
 
@@ -322,6 +331,17 @@ bool Mya::getIsServer() {
 
 Assets* Mya::getAssets() {
 	return assets;
+}
+
+void Mya::setUPS(int u)
+{
+	ups = u;
+	timepertick = 1000 / u;
+}
+
+int Mya::getUPS()
+{
+	return ups;
 }
 
 void* Mya::lua_getRenderer() {

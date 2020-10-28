@@ -72,16 +72,16 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\acoop\OneDrive\Desktop\Github\mya-1\mya-1\dep-windows\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\acoop\OneDrive\Desktop\Github\mya-1\mya-1\dep-windows\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\acoop\OneDrive\Desktop\Github\Mya-1\dep-windows\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\acoop\OneDrive\Desktop\Github\Mya-1\dep-windows\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\acoop\OneDrive\Desktop\Github\mya-1\mya-1\dep-windows\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\acoop\OneDrive\Desktop\Github\mya-1\mya-1\dep-windows\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\acoop\OneDrive\Desktop\Github\Mya-1\dep-windows\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\acoop\OneDrive\Desktop\Github\Mya-1\dep-windows\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
