@@ -57,6 +57,9 @@
     <ClCompile Include="Mya\Graphics\Animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Mya\Game\Col\ColTile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mya\Graphics\Font.h">
@@ -96,6 +99,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Mya\Graphics\Animation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mya\Game\Col\ColTile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mya\Game\Col\ColEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

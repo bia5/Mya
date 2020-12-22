@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Mya\Game\Col\ColTile.cpp" />
     <ClCompile Include="Mya\Graphics\Animation.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Mya\Assets.cpp" />
@@ -166,6 +167,8 @@
     <ClCompile Include="Mya\Utils\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Mya\Game\Col\ColEntity.h" />
+    <ClInclude Include="Mya\Game\Col\ColTile.h" />
     <ClInclude Include="Mya\Graphics\Animation.h" />
     <ClInclude Include="Mya\Assets.h" />
     <ClInclude Include="Mya\Graphics\Font.h" />
