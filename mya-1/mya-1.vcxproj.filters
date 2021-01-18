@@ -60,6 +60,9 @@
     <ClCompile Include="Mya\Game\Col\ColTile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Mya\Game\Col\ColEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mya\Graphics\Font.h">

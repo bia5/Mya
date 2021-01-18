@@ -22,9 +22,10 @@ public:
 	Animation* ani = NULL; // animation alloc
 	Sprite* spr = NULL; // sprite alloc
 
-	ColTile(float x, float y, float w, float h, float xo, float yo, void* updateCallback, Animation ani, bool isCollidable, void* onCollideCallback);
-	ColTile(float x, float y, float w, float h, float xo, float yo, void* updateCallback, Sprite spr, bool isCollidable, void* onCollideCallback);
+	ColTile(float x, float y, float w, float h, float xo, float yo, void* updateCallback, Animation* ani, bool isCollidable, void* onCollideCallback);
+	ColTile(float x, float y, float w, float h, float xo, float yo, void* updateCallback, Sprite* spr, bool isCollidable, void* onCollideCallback);
 
+	std::string getID();
 	float getX();
 	float getY();
 	float getW();

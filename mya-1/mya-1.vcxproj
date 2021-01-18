@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Mya\Game\Col\ColEntity.cpp" />
     <ClCompile Include="Mya\Game\Col\ColTile.cpp" />
     <ClCompile Include="Mya\Graphics\Animation.cpp" />
     <ClCompile Include="Main.cpp" />

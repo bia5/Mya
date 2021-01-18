@@ -1,6 +1,6 @@
 #include "ColTile.h"
 
-ColTile::ColTile(float _x, float _y, float _w, float _h, float _xo, float _yo, void* _updateCallback, Animation _ani, bool isCollidable, void* onCollideCallback)
+ColTile::ColTile(float _x, float _y, float _w, float _h, float _xo, float _yo, void* _updateCallback, Animation* _ani, bool isCollidable, void* onCollideCallback)
 {
 	x = _x;
 	y = _y;
@@ -9,11 +9,11 @@ ColTile::ColTile(float _x, float _y, float _w, float _h, float _xo, float _yo, v
 	xo = _xo;
 	yo = _yo;
 	updateCallback = _updateCallback;
-	ani = &_ani;
+	ani = _ani;
 	which = true;
 }
 
-ColTile::ColTile(float _x, float _y, float _w, float _h, float _xo, float _yo, void* _updateCallback, Sprite _spr, bool isCollidable, void* onCollideCallback)
+ColTile::ColTile(float _x, float _y, float _w, float _h, float _xo, float _yo, void* _updateCallback, Sprite* _spr, bool isCollidable, void* onCollideCallback)
 {
 	x = _x;
 	y = _y;
@@ -22,8 +22,13 @@ ColTile::ColTile(float _x, float _y, float _w, float _h, float _xo, float _yo, v
 	xo = _xo;
 	yo = _yo;
 	updateCallback = _updateCallback;
-	spr = &_spr;
+	spr = _spr;
 	which = false;
+}
+
+std::string ColTile::getID()
+{
+	return id;
 }
 
 float ColTile::getX()

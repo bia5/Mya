@@ -16,6 +16,7 @@ void Mya::initLua() {
 	lua->loadGraphics();
 	lua->loadNetwork();
 	lua->loadAudio();
+	lua->loadCol(); //Colonialist Game Assets
 }
 
 bool Mya::init(std::string title, int w, int h) {

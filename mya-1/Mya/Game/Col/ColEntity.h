@@ -28,5 +28,52 @@ public:
 	bool which = false; // use spr (false) or ani (true)
 	Animation* ani = NULL; // animation alloc
 	Sprite* spr = NULL; // sprite alloc
+
+	ColEntity(std::string _id, Animation* _ani, float _x, float _y, float _xoff, float _yoff, void* _updateCallback, float _mvSpeed);
+	ColEntity(std::string _id, Sprite* _spr, float _x, float _y, float _xoff, float _yoff, void* _updateCallback, float _mvSpeed);
+
+	std::string getID();
+	float getX();
+	float getY();
+	float getW();
+	float getH();
+	float getXO();
+	float getYO();
+	float getMovementSpeed();
+
+	bool getUp();
+	bool getDn();
+	bool getRt();
+	bool getLt();
+
+	void* getUpdateCallback();
+	bool getIsCollidable();
+	void* getOnCollideCallback();
+
+	bool getWhich();
+	Animation* getAnimation();
+	Sprite* getSprite();
+	
+	void setID(std::string _id);
+	void setX(float _x);
+	void setY(float _y);
+	void setW(float _w);
+	void setH(float _h);
+	void setXO(float _xo);
+	void setYO(float _yo);
+	void setMovementSpeed(float _movementSpeed);
+
+	void setUp(bool _up);
+	void setDn(bool _dn);
+	void setRt(bool _rt);
+	void setLt(bool _lt);
+
+	void setUpdateCallback(void* _updateCallback);
+	void setIsCollidable(bool _isCollidable);
+	void setOnCollideCallback(void* _onCollideCallback);
+
+	void setWhich(bool _which);
+	void setAnimation(Animation* _ani);
+	void setSprite(Sprite* _spr);
 private:
 };

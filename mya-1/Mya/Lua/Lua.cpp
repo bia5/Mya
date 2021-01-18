@@ -11,6 +11,10 @@
 #include "../Sound/Music.h"
 #include "../Graphics/Animation.h"
 
+//Col
+#include "../Game/Col/ColEntity.h"
+#include "../Game/Col/ColTile.h"
+
 Lua::Lua() {
 	lua.open_libraries();
 }
@@ -178,4 +182,75 @@ void Lua::loadAudio() {
 		"isPlaying", &Music::isPlaying,
 		"setVolume", &Music::setVolume,
 		"getVolume", &Music::getVolume);
+}
+
+void Lua::loadCol() {
+	lua.new_usertype<ColTile>("ColTile",
+		sol::constructors<ColTile(float, float, float, float, float, float, void*, Animation*, bool, void*), 
+			ColTile(float, float, float, float, float, float, void*, Sprite*, bool, void*)>(),
+		"getID", &ColTile::getID,
+		"getX", &ColTile::getX,
+		"getY", &ColTile::getY,
+		"getW", &ColTile::getW,
+		"getH", &ColTile::getH,
+		"getXO", &ColTile::getXO,
+		"getYO", &ColTile::getYO,
+		"getUpdateCallback", &ColTile::getUpdateCallback,
+		"getWhich", &ColTile::getWhich,
+		"getAnimation", &ColTile::getAnimation,
+		"getSprite", &ColTile::getSprite,
+		"getIsCollidable", &ColTile::getIsCollidable,
+		"getOnCollideCallback", &ColTile::getOnCollideCallback,
+		"setX", &ColTile::setX,
+		"setY", &ColTile::setY,
+		"setW", &ColTile::setW,
+		"setH", &ColTile::setH,
+		"setXO", &ColTile::setXO,
+		"setYO", &ColTile::setYO,
+		"setUpdateCallback", &ColTile::setUpdateCallback,
+		"setWhich", &ColTile::setWhich,
+		"setAnimation", &ColTile::setAnimation,
+		"setSprite", &ColTile::setSprite,
+		"setIsCollidable", &ColTile::setIsCollidable,
+		"setOnCollideCallback", &ColTile::setOnCollideCallback);
+	
+	lua.new_usertype<ColEntity>("ColEntity",
+		sol::constructors<ColEntity(std::string , Animation*, float, float, float, float, void*, float), 
+			ColEntity(std::string, Sprite*, float, float, float, float, void*, float)>(),
+		"getID", &ColEntity::getID,
+		"getX", &ColEntity::getX,
+		"getY", &ColEntity::getY,
+		"getW", &ColEntity::getW,
+		"getH", &ColEntity::getH,
+		"getXO", &ColEntity::getXO,
+		"getYO", &ColEntity::getYO,
+		"getMovementSpeed", &ColEntity::getMovementSpeed,
+		"getUp", &ColEntity::getUp,
+		"getDn", &ColEntity::getDn,
+		"getRt", &ColEntity::getRt,
+		"getLt", &ColEntity::getLt,
+		"getUpdateCallback", &ColEntity::getUpdateCallback,
+		"getIsCollidable", &ColEntity::getIsCollidable,
+		"getOnCollideCallback", &ColEntity::getOnCollideCallback,
+		"getWhich", &ColEntity::getWhich,
+		"getAnimation", &ColEntity::getAnimation,
+		"getSprite", &ColEntity::getSprite,
+		"setID", &ColEntity::setID,
+		"setX", &ColEntity::setX,
+		"setY", &ColEntity::setY,
+		"setW", &ColEntity::setW,
+		"setH", &ColEntity::setH,
+		"setXO", &ColEntity::setXO,
+		"setYO", &ColEntity::setYO,
+		"setMovementSpeed", &ColEntity::setMovementSpeed,
+		"setUp", &ColEntity::setUp,
+		"setDn", &ColEntity::setDn,
+		"setRt", &ColEntity::setRt,
+		"setLt", &ColEntity::setLt,
+		"setUpdateCallback", &ColEntity::setUpdateCallback,
+		"setIsCollidable", &ColEntity::setIsCollidable,
+		"setOnCollideCallback", &ColEntity::setOnCollideCallback,
+		"setWhich", &ColEntity::setWhich,
+		"setAnimation", &ColEntity::setAnimation,
+		"setSprite", &ColEntity::setSprite);
 }
