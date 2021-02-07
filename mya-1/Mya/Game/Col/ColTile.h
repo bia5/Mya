@@ -7,7 +7,7 @@
 
 class ColTile {
 public:
-	std::string id = "null";
+	std::string id = "null", data="";
 	float x = 0; // main x for the tile
 	float y = 0; // main y for the tile
 	float w = 0; // the width of the tile
