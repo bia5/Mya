@@ -4,6 +4,8 @@
 #include <string>
 #include <SDL.h>
 #undef main
+#include <SDL_opengl.h>
+#include <gl/GLU.h>
 #include <SDL_net.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
@@ -11,13 +13,11 @@
 
 #include "Utils/FPS.h"
 #include "Utils/Timer.h"
-#include "Assets.h"
 #include "Lua/Lua.h"
 
 class Mya {
 public:
-	const char* VERSION = "Mya 1.4.2 Beta (Codename: Jisoo)";
-	static Assets* assets;
+	const char* VERSION = "Mya 1.5.0 Beta (Codename: Gahyeon)";
 	static Lua* lua;
 
 	Timer deltaTimer;
@@ -37,29 +37,27 @@ public:
 	void setFullscreen(bool);
 	bool getFullscreen();
 	SDL_Window* getWindow();
-	SDL_Renderer* getRenderer();
 	void setWindowTitle(std::string);
 	void setWindowIcon(std::string tex);
 	void showCursor(bool);
 	int getWidth();
 	int getHeight();
 	std::string getPath();
-	void setRenderDrawColor(int, int, int, int);
 
 	std::string getVersion();
 	int getFps();
 	bool getIsServer();
-	Assets* getAssets();
 	void setUPS(int);
 	int getUPS();
 
 	//Lua Compat
-	void* lua_getRenderer();
 	Mya* getMya();
 
 private:
 	SDL_Window* window;
-	SDL_Renderer* renderer;
+	SDL_GLContext glContext;
+
+	bool glRenderQuad = true;
 
 	static bool run;
 	static bool fullscreen;

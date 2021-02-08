@@ -99,7 +99,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2_gpu.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;SDL2_net.lib;SDL2.lib;SDL2main.lib;lua51.lib;lua5.1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glu32.lib;opengl32.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;SDL2_net.lib;SDL2.lib;SDL2main.lib;lua51.lib;lua5.1.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -129,7 +129,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2_gpu.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;SDL2_net.lib;SDL2.lib;SDL2main.lib;lua51.lib;lua5.1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glu32.lib;opengl32.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;SDL2_net.lib;SDL2.lib;SDL2main.lib;lua51.lib;lua5.1.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -150,17 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Mya\Game\Col\ColChunk.cpp" />
-    <ClCompile Include="Mya\Game\Col\ColEntity.cpp" />
-    <ClCompile Include="Mya\Game\Col\ColTile.cpp" />
-    <ClCompile Include="Mya\Game\Col\ColWorld.cpp" />
-    <ClCompile Include="Mya\Graphics\Animation.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Mya\Assets.cpp" />
-    <ClCompile Include="Mya\Graphics\Font.cpp" />
-    <ClCompile Include="Mya\Graphics\Sprite.cpp" />
-    <ClCompile Include="Mya\Graphics\Texture.cpp" />
-    <ClCompile Include="Mya\Graphics\TextView.cpp" />
     <ClCompile Include="Mya\Lua\Lua.cpp" />
     <ClCompile Include="Mya\Mya.cpp" />
     <ClCompile Include="Mya\Network\Network.cpp" />
@@ -170,16 +160,6 @@
     <ClCompile Include="Mya\Utils\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Mya\Game\Col\ColChunk.h" />
-    <ClInclude Include="Mya\Game\Col\ColEntity.h" />
-    <ClInclude Include="Mya\Game\Col\ColTile.h" />
-    <ClInclude Include="Mya\Game\Col\ColWorld.h" />
-    <ClInclude Include="Mya\Graphics\Animation.h" />
-    <ClInclude Include="Mya\Assets.h" />
-    <ClInclude Include="Mya\Graphics\Font.h" />
-    <ClInclude Include="Mya\Graphics\Sprite.h" />
-    <ClInclude Include="Mya\Graphics\Texture.h" />
-    <ClInclude Include="Mya\Graphics\TextView.h" />
     <ClInclude Include="Mya\Lua\Lua.h" />
     <ClInclude Include="Mya\Mya.h" />
     <ClInclude Include="Mya\Network\Network.h" />
@@ -187,6 +167,9 @@
     <ClInclude Include="Mya\Sound\Sound.h" />
     <ClInclude Include="Mya\Utils\FPS.h" />
     <ClInclude Include="Mya\Utils\Timer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="mya lua docs.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

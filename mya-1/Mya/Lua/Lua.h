@@ -15,9 +15,7 @@ public:
 	void exec(std::string commad);
 
 	void loadMya(Mya*);
-	void loadMya_t();
 	void loadGraphics();
 	void loadNetwork();
 	void loadAudio();
-	void loadCol();
 };

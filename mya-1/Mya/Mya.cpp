@@ -2,11 +2,9 @@
 
 bool Mya::run = NULL;
 bool Mya::fullscreen = NULL;
-Assets* Mya::assets = NULL;
 Lua* Mya::lua = NULL;
 
 Mya::Mya() {
-	renderer = nullptr;
 	window = nullptr;
 }
 
@@ -16,7 +14,6 @@ void Mya::initLua() {
 	lua->loadGraphics();
 	lua->loadNetwork();
 	lua->loadAudio();
-	lua->loadCol(); //Colonialist Game Assets
 }
 
 bool Mya::init(std::string title, int w, int h) {
@@ -39,37 +36,33 @@ bool Mya::init(std::string title, int w, int h) {
 		run = false;
 	}
 	else {
-		window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
-		//GPU_SetInitWindow(SDL_GetWindowID(window));
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
+		window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
 		if (window == NULL) {
 			std::cout << "Error IN Mya::init, with SDL_CreateWindow: " << SDL_GetError() << std::endl;
 			run = false;
 		}
 		else {
-			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-			if (!renderer) {
-				std::cout << "Error IN Mya::init, with SDL_CreateRenderer: " << SDL_GetError() << std::endl;
+			glContext = SDL_GL_CreateContext(window);
+			if (glContext == NULL) {
+				printf("OpenGL context could not be created! SDL Error: %s\n", SDL_GetError());
 				run = false;
-			}
-			else {
+			} else {
+				glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+				glClearColor(0.f, 0.f, 0.f, 1.f);
+				glClear(GL_COLOR_BUFFER_BIT);
+
 				if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
 					printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
 					run = false;
-				}
-				else {
-					SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);//I like this grey. Fucking fight me bish.
-					SDL_UpdateWindowSurface(window);
-
-					SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-
-					assets = new Assets(this);
-					//lua->lua["assets"] = assets;
-
+				} else {
 					timepertick = 1000 / ups;
 					timer = std::clock();
 					SDL_StartTextInput();
 					std::cout << "Sucessfully started " << VERSION << "!" << std::endl;
-					
 					run = true;
 				}
 			}
@@ -132,6 +125,9 @@ void Mya::update() {
 				SDL_GetWindowSize(window, &SCREEN_WIDTH, &SCREEN_HEIGHT);
 				//lua->exec("if event_windowResize ~= nil then event_windowResize(" + std::to_string(SCREEN_WIDTH) + "," + std::to_string(SCREEN_HEIGHT) + ") end");
 				
+				glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT); //Update opengl's viewport
+
+				//update to lua
 				sol::function event_keyDown = lua->lua["event_windowResize"];
 				if (event_keyDown != sol::nil)
 					event_keyDown(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -215,13 +211,14 @@ void Mya::update() {
 }
 
 void Mya::render() {
-	SDL_SetRenderDrawColor(renderer, 45, 45, 48, 0);
 	fps.frames++;
-	SDL_RenderClear(renderer);
+
+	glClearColor(0.f, 0.f, 0.f, 1.f);
+	glClear(GL_COLOR_BUFFER_BIT);
 
 	lua->exec("if event_render ~= nil then event_render() end");
 
-	SDL_RenderPresent(renderer);
+	SDL_GL_SwapWindow(window);
 }
 
 void Mya::exit() {
@@ -237,8 +234,6 @@ void Mya::close() {
 	std::cout << "close" << std::endl;
 	SDL_StopTextInput();
 
-	SDL_DestroyRenderer(renderer);
-	renderer = NULL;
 	SDL_DestroyWindow(window);
 	window = NULL;
 
@@ -281,10 +276,6 @@ SDL_Window* Mya::getWindow() {
 	return window;
 }
 
-SDL_Renderer* Mya::getRenderer() {
-	return renderer;
-}
-
 void Mya::setWindowTitle(std::string text){
 	SDL_SetWindowTitle(window, text.c_str());
 }
@@ -313,11 +304,6 @@ std::string Mya::getPath()
 	return (std::string)SDL_GetBasePath();
 }
 
-void Mya::setRenderDrawColor(int r, int g, int b, int a)
-{
-	SDL_SetRenderDrawColor(renderer, r, g, b, a);
-}
-
 std::string Mya::getVersion() {
 	return VERSION;
 }
@@ -330,10 +316,6 @@ bool Mya::getIsServer() {
 	return isServer;
 }
 
-Assets* Mya::getAssets() {
-	return assets;
-}
-
 void Mya::setUPS(int u)
 {
 	ups = u;
@@ -343,10 +325,6 @@ void Mya::setUPS(int u)
 int Mya::getUPS()
 {
 	return ups;
-}
-
-void* Mya::lua_getRenderer() {
-	return (void*) renderer;
 }
 
 Mya* Mya::getMya() {

@@ -1,5 +1,7 @@
 #pragma once
 
+#pragma warning( disable : 4018 )
+
 #include <SDL_net.h>
 #include <time.h>
 #include <chrono>
