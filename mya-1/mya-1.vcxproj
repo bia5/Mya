@@ -150,7 +150,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\dep-windows\src\glad.c" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Mya\Graphics\Shader.cpp" />
+    <ClCompile Include="Mya\Graphics\Sprite.cpp" />
+    <ClCompile Include="Mya\Graphics\Texture.cpp" />
     <ClCompile Include="Mya\Lua\Lua.cpp" />
     <ClCompile Include="Mya\Mya.cpp" />
     <ClCompile Include="Mya\Network\Network.cpp" />
@@ -160,6 +164,9 @@
     <ClCompile Include="Mya\Utils\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Mya\Graphics\Shader.h" />
+    <ClInclude Include="Mya\Graphics\Sprite.h" />
+    <ClInclude Include="Mya\Graphics\Texture.h" />
     <ClInclude Include="Mya\Lua\Lua.h" />
     <ClInclude Include="Mya\Mya.h" />
     <ClInclude Include="Mya\Network\Network.h" />

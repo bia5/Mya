@@ -4,8 +4,7 @@
 #include <string>
 #include <SDL.h>
 #undef main
-#include <SDL_opengl.h>
-#include <gl/GLU.h>
+#include <glad/glad.h>
 #include <SDL_net.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>

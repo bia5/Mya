@@ -51,6 +51,7 @@ bool Mya::init(std::string title, int w, int h) {
 				printf("OpenGL context could not be created! SDL Error: %s\n", SDL_GetError());
 				run = false;
 			} else {
+				gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
 				glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 				glClearColor(0.f, 0.f, 0.f, 1.f);
 				glClear(GL_COLOR_BUFFER_BIT);
