@@ -81,5 +81,5 @@ void Shader::setFloat(std::string name, float value) {
 }
 
 void Shader::destroy() {
-
+	glDeleteProgram(ID);
 }

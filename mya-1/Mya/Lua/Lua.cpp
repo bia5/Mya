@@ -5,6 +5,10 @@
 #include "../Sound/Sound.h"
 #include "../Sound/Music.h"
 
+#include "../Graphics/Shader.h"
+#include "../Graphics/Texture.h"
+#include "../Graphics/Sprite.h"
+
 Lua::Lua() {
 	lua.open_libraries();
 }
@@ -37,7 +41,34 @@ void Lua::loadMya(Mya* mya) {
 }
 
 void Lua::loadGraphics() {
-	
+	lua.new_usertype<Shader>("Shader",
+		sol::constructors<Shader(std::string vertexPath, std::string fragmentPath)>(),
+		"use", &Shader::use,
+		"setBool", &Shader::setBool,
+		"setInt", &Shader::setInt,
+		"setFloat", &Shader::setFloat,
+		"destroy", &Shader::destroy);
+
+	lua.new_usertype<Texture>("Texture",
+		sol::constructors<Texture(std::string path)>(),
+		"use", &Texture::use,
+		"destroy", &Texture::destroy);
+
+	lua.new_usertype<Sprite>("Sprite",
+		sol::constructors<Sprite(float _x, float _y, float _w, float _h, Shader* s, Texture* t)>(),
+		"render", &Sprite::render,
+		"destroy", &Sprite::destroy, 
+		"setX", &Sprite::setX, 
+		"setY", &Sprite::setY, 
+		"setW", &Sprite::setW, 
+		"setH", &Sprite::setH, 
+		"getX", &Sprite::getX, 
+		"getY", &Sprite::getY, 
+		"getW", &Sprite::getW, 
+		"getH", &Sprite::getH,
+		"isColliding", &Sprite::isColliding, 
+		"isPointColliding", &Sprite::isPointColliding, 
+		"isPointInRect", &Sprite::isPointInRect);
 }
 
 void Lua::loadNetwork() {

@@ -31,5 +31,5 @@ void Texture::use() {
 }
 
 void Texture::destroy() {
-
+	glDeleteTextures(1, &texture);
 }

@@ -23,12 +23,31 @@ void Sprite::render()
 }
 
 void Sprite::destroy() {
+	shader->destroy();
+	texture->destroy();
 
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &EBO);
 }
 
-void Sprite::setXY(float _x, float _y) {
+void Sprite::setX(float _x) {
 	x = _x;
+	updateVertices();
+}
+
+void Sprite::setY(float _y) {
 	y = _y;
+	updateVertices();
+}
+
+void Sprite::setW(float _w) {
+	w = _w;
+	updateVertices();
+}
+
+void Sprite::setH(float _h) {
+	h = _h;
 	updateVertices();
 }
 
@@ -38,6 +57,32 @@ float Sprite::getX() {
 
 float Sprite::getY() {
 	return y;
+}
+
+float Sprite::getW() {
+	return w;
+}
+
+float Sprite::getH() {
+	return h;
+}
+
+bool Sprite::isColliding(Sprite spr) {
+	return (isPointInRect(spr.x, spr.y, x, y, w, h) ||
+		isPointInRect(spr.x + spr.w, spr.y, x, y, w, h) ||
+		isPointInRect(spr.x, spr.y + spr.h, x, y, w, h) ||
+		isPointInRect(spr.x + spr.w, spr.y + spr.h, x, y, w, h));
+}
+
+bool Sprite::isPointColliding(float xx, float yy) {
+	return isPointInRect(xx, yy, x, y, w, h);
+}
+
+bool Sprite::isPointInRect(float xx, float yy, float rx, float ry, float rw, float rh) {
+	if (x > rx && x < (rx + rw))
+		if (y > ry && y < (ry + rh))
+			return true;
+	return false;
 }
 
 void Sprite::updateVertices() {

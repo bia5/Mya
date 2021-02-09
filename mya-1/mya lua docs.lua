@@ -20,6 +20,36 @@ mya_showCursor(true) --Sets if the os's cursor will show when hovering over mya'
 mya_getWidth() --Returns an int with mya's window's current width.
 mya_getHeight() --Returns an int with mya's window's current height.
 
+
+--Graphics
+shader = Shader.new("/assets/shaders/vertexshader.vert","/assets/shaders/fragmentshader.frag")
+shader:use()
+shader:setBool("var", true)
+shader:setInt("var", 69)
+shader:setFloat("var", 6.9)
+shader:destroy()
+
+texture = Texture.new("/assets/texture/error.png")
+texture:use()
+texture:destroy()
+
+sprite = Sprite.new(0, 0, 1, 1, shader, texture)
+sprite:render()
+sprite:destroy()
+sprite:setX(1)
+sprite:setY(1)
+sprite:setW(1)
+sprite:setH(1)
+sprite:getX()
+sprite:getY()
+sprite:getW()
+sprite:getH()
+sprite:isColliding(sprite2)
+sprite:isPointColliding(0.5, 0.5)
+sprite:isPointInRect(0.5, 0.5, 0, 0, 1, 1)
+
+
+--Network
 network = Network.new()
 "init", &Network::init,
 "update", &Network::lua_update,
@@ -61,6 +91,8 @@ network = Network.new()
 "getPort", &Network::getPort,
 "close", &Network::close);
 
+
+--Audio
 sound = Sound.new("assets/sound.wav") --arg1: asset location
 sound:destroy()
 sound:play()
@@ -76,7 +108,6 @@ music:stop()
 music:isPlaying() --returns bool, whether music is playing
 music:setVolume(64) --arg1: volume (0-128)
 music:getVolume() --returns int, which is the volume
-
 
 
 --Callbacks

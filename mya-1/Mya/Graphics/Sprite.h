@@ -30,10 +30,18 @@ public:
 	void render();
 	void destroy();
 
-	void setXY(float _x, float _y);
+	void setX(float _x);
+	void setY(float _y);
+	void setW(float _w);
+	void setH(float _h);
 	float getX();
 	float getY();
+	float getW();
+	float getH();
 
+	bool isColliding(Sprite spr);
+	bool isPointColliding(float xx, float yy);
+	bool isPointInRect(float xx, float yy, float rx, float ry, float rw, float rh);
 private:
 	float x = 0.f, y = 0.f, w = 0.f, h = 0.f;
 	void updateVertices();
