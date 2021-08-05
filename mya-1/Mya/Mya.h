@@ -52,6 +52,10 @@ public:
 	//Lua Compat
 	Mya* getMya();
 
+	//OPENGL Compat
+	void setDepthTest(bool _dt);
+	void set3D(bool _d);
+
 private:
 	SDL_Window* window;
 	SDL_GLContext glContext;
@@ -60,9 +64,11 @@ private:
 
 	static bool run;
 	static bool fullscreen;
+	static bool _3D;
+	static bool depthTest;
 
 	std::clock_t timer; //To help keep track of milliseconds since last update :D
 	int overall; //Combine all time to keep everything balanced, like all things should be
 	int timepertick = 33; // How long does the timer have until we call another update
-	int ups = 60; //how many times per second to call update
+	int ups = 128; //how many times per second to call update
 };

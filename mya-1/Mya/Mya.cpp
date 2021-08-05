@@ -1,7 +1,9 @@
 #include "Mya.h"
 
-bool Mya::run = NULL;
-bool Mya::fullscreen = NULL;
+bool Mya::run = false;
+bool Mya::fullscreen = false;
+bool Mya::_3D = false;
+bool Mya::depthTest = false;
 Lua* Mya::lua = NULL;
 
 Mya::Mya() {
@@ -53,8 +55,6 @@ bool Mya::init(std::string title, int w, int h) {
 			} else {
 				gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
 				glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-				glClearColor(0.f, 0.f, 0.f, 1.f);
-				glClear(GL_COLOR_BUFFER_BIT);
 
 				if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
 					printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
@@ -215,7 +215,10 @@ void Mya::render() {
 	fps.frames++;
 
 	glClearColor(0.f, 0.f, 0.f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	if (depthTest)
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	else
+		glClear(GL_COLOR_BUFFER_BIT);
 
 	lua->exec("if event_render ~= nil then event_render() end");
 
@@ -330,4 +333,16 @@ int Mya::getUPS()
 
 Mya* Mya::getMya() {
 	return this;
+}
+
+void Mya::setDepthTest(bool _dt) {
+	depthTest = _dt;
+	if (depthTest)
+		glEnable(GL_DEPTH_TEST);
+	else
+		glDisable(GL_DEPTH_TEST);
+}
+
+void Mya::set3D(bool _d) {
+	_3D = _d;
 }

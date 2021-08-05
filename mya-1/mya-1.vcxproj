@@ -164,6 +164,7 @@
     <ClCompile Include="Mya\Utils\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Mya\Graphics\Camera.h" />
     <ClInclude Include="Mya\Graphics\Shader.h" />
     <ClInclude Include="Mya\Graphics\Sprite.h" />
     <ClInclude Include="Mya\Graphics\Texture.h" />
