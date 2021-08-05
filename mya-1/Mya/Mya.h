@@ -16,7 +16,7 @@
 
 class Mya {
 public:
-	const char* VERSION = "Mya 1.4.2 Beta (Codename: Jisoo)";
+	const char* VERSION = "Mya 1.4.3 Beta (Codename: Jisoo)";
 	static Assets* assets;
 	static Lua* lua;
 

@@ -98,19 +98,19 @@ void Mya::update() {
 			char k = 0;
 
 			k = e.key.keysym.sym;
-			if(k == SDLK_BACKSPACE){
-				sol::function event_keyDown = lua->lua["event_keyDown"];
-				if (event_keyDown != sol::nil)
+			sol::function event_keyDown = lua->lua["event_keyDown"];
+			if (event_keyDown != sol::nil) {
+				if (k == SDLK_ESCAPE)
+					event_keyDown("esc");
+				else if (k == SDLK_BACKSPACE)
 					event_keyDown("backspace");
+				else if (k == SDLK_KP_ENTER)
+					event_keyDown("enter");
 				else
-					std::cout << "event_keyDown not registered\n";
-			} else {
-				sol::function event_keyDown = lua->lua["event_keyDown"];
-				if (event_keyDown != sol::nil)
 					event_keyDown(k);
-				else
-					std::cout << "event_keyDown not registered\n";
 			}
+			else
+				std::cout << "event_keyDown not registered\n";
 		}
 		if (e.type == SDL_KEYUP) {
 			char k = 0;
@@ -121,6 +121,10 @@ void Mya::update() {
 			if (event_keyDown != sol::nil) {
 				if (k == SDLK_ESCAPE) 
 					event_keyDown("esc");
+				else if (k == SDLK_BACKSPACE)
+					event_keyDown("backspace");
+				else if (k == SDLK_KP_ENTER)
+					event_keyDown("enter");
 				else
 					event_keyDown(k);
 			}
