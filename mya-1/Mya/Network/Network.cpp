@@ -61,7 +61,7 @@ std::vector<ClientMessage> Network::update() {
 				//Handle Messages
 				std::string dataa = (char*)packets[i]->data;
 				std::string data = dataa.substr(0, packets[i]->len);
-				std::cout << data << std::endl;
+				//std::cout << data << std::endl;
 				totalBytesRecv += data.size();
 				totalPacketsRecv += 1;
 				timedBytesRecv += data.size();
@@ -137,7 +137,7 @@ void Network::lua_update(void* m)
 				//Handle Messages
 				std::string dataa = (char*)packets[i]->data;
 				std::string data = dataa.substr(0, packets[i]->len);
-				std::cout << data << std::endl;
+				//std::cout << data << std::endl;
 				totalBytesRecv += data.size();
 				totalPacketsRecv += 1;
 				timedBytesRecv += data.size();
