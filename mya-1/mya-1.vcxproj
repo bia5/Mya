@@ -72,16 +72,16 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\acoop\OneDrive\Desktop\dep\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\acoop\OneDrive\Desktop\dep\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\acoop\Google Drive\dep\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\acoop\Google Drive\dep\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\acoop\OneDrive\Desktop\dep\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\acoop\OneDrive\Desktop\dep\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\acoop\Google Drive\dep\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\acoop\Google Drive\dep\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>

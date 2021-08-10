@@ -21,6 +21,8 @@ public:
 	static Lua* lua;
 
 	Timer deltaTimer;
+	Timer trueDeltaTimer;
+	float delta = 0;
 	FPS fps;
 	int SCREEN_WIDTH = 1280, SCREEN_HEIGHT = 720;
 	int osw = 1280, osh = 720;
@@ -52,6 +54,9 @@ public:
 	Assets* getAssets();
 	void setUPS(int);
 	int getUPS();
+
+	void deltaUpdate();
+	float getDelta();
 
 	//Lua Compat
 	void* lua_getRenderer();

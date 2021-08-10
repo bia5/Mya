@@ -349,6 +349,22 @@ int Mya::getUPS()
 	return ups;
 }
 
+void Mya::deltaUpdate()
+{
+	if (!trueDeltaTimer.isStarted())
+		trueDeltaTimer.start();
+	else {
+		delta = trueDeltaTimer.getTicks();
+		trueDeltaTimer.stop();
+		trueDeltaTimer.start();
+	}
+}
+
+float Mya::getDelta()
+{
+	return delta;
+}
+
 void* Mya::lua_getRenderer() {
 	return (void*) renderer;
 }

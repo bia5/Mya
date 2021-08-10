@@ -49,6 +49,8 @@ void Lua::loadMya(Mya* mya) {
 	lua.set_function("mya_setRenderDrawColor", &Mya::setRenderDrawColor, mya);
 	lua.set_function("mya_setUPS", &Mya::setUPS, mya);
 	lua.set_function("mya_getUPS", &Mya::getUPS, mya);
+	lua.set_function("mya_deltaUpdate", &Mya::deltaUpdate, mya);
+	lua.set_function("mya_getDelta", &Mya::getDelta, mya);
 }
 
 void Lua::loadMya_t() { //This is kinda useless... This needs a revison!
@@ -116,7 +118,11 @@ void Lua::loadGraphics() {
 		"renderDefault", &Animation::lua_renderDefault,
 		"setFrame", &Animation::setFrame,
 		"setTexID", &Animation::setTexID,
-		"setFPS", &Animation::setFPS);
+		"setFPS", &Animation::setFPS,
+		"setX", &Animation::setX,
+		"setY", &Animation::setY,
+		"isColliding", &Animation::isColliding,
+		"isPointColliding", &Animation::isPointColliding);
 }
 
 void Lua::loadNetwork() {
