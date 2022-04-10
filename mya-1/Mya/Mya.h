@@ -16,7 +16,7 @@
 
 class Mya {
 public:
-	const char* VERSION = "Mya 1.4.3 Beta (Codename: Jisoo)";
+	const char* VERSION = "Mya 1.4.4 Beta (Codename: Jisoo)";
 	static Assets* assets;
 	static Lua* lua;
 
@@ -47,6 +47,7 @@ public:
 	int getHeight();
 	std::string getPath();
 	void setRenderDrawColor(int, int, int, int);
+	void setIsOnTop(bool onTop);
 
 	std::string getVersion();
 	int getFps();

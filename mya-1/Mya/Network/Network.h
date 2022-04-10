@@ -25,7 +25,7 @@ public:
 	std::string			serverName = "localhost";
 	short				PORT = 9999;
 	bool				isServer = false;
-	const int32_t		PACKET_SIZE = 512;
+	const int32_t		PACKET_SIZE = 1000000;
 	int					PACKET_AMT = 120;
 	bool				DEBUG = false;
 	bool				hasInit = false;

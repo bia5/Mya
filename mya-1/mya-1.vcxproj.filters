@@ -69,6 +69,9 @@
     <ClCompile Include="Mya\Game\Col\ColWorld.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Mya\Utils\FileHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mya\Graphics\Font.h">
@@ -120,6 +123,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Mya\Game\Col\ColWorld.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mya\Utils\FileHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -322,6 +322,10 @@ void Mya::setRenderDrawColor(int r, int g, int b, int a)
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);
 }
 
+void Mya::setIsOnTop(bool onTop){
+	SDL_SetWindowGrab(window, (SDL_bool) onTop);
+}
+
 std::string Mya::getVersion() {
 	return VERSION;
 }

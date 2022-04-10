@@ -10,6 +10,7 @@
 #include "../Sound/Sound.h"
 #include "../Sound/Music.h"
 #include "../Graphics/Animation.h"
+#include "../Utils/FileHandler.h"
 
 //Col
 #include "../Game/Col/ColEntity.h"
@@ -51,6 +52,7 @@ void Lua::loadMya(Mya* mya) {
 	lua.set_function("mya_getUPS", &Mya::getUPS, mya);
 	lua.set_function("mya_deltaUpdate", &Mya::deltaUpdate, mya);
 	lua.set_function("mya_getDelta", &Mya::getDelta, mya);
+	lua.set_function("mya_setIsOnTop", &Mya::setIsOnTop, mya);
 }
 
 void Lua::loadMya_t() { //This is kinda useless... This needs a revison!
@@ -123,6 +125,16 @@ void Lua::loadGraphics() {
 		"setY", &Animation::setY,
 		"isColliding", &Animation::isColliding,
 		"isPointColliding", &Animation::isPointColliding);
+
+	lua.new_usertype<FileHandler>("FileHandler",
+		sol::constructors<FileHandler()>(),
+		"listDir", &FileHandler::listDir,
+		"getSize", &FileHandler::getSize,
+		"get", &FileHandler::get,
+		"dirExists", &FileHandler::dirExists,
+		"fileExists", &FileHandler::fileExists,
+		"createDir", &FileHandler::createDir,
+		"createFile", &FileHandler::createFile);
 }
 
 void Lua::loadNetwork() {

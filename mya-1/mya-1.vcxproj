@@ -29,26 +29,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -80,8 +80,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\acoop\Google Drive\dep\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\acoop\Google Drive\dep\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>G:\My Drive\dep\include;$(IncludePath)</IncludePath>
+    <LibraryPath>G:\My Drive\dep\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -166,6 +166,7 @@
     <ClCompile Include="Mya\Network\Network.cpp" />
     <ClCompile Include="Mya\Sound\Music.cpp" />
     <ClCompile Include="Mya\Sound\Sound.cpp" />
+    <ClCompile Include="Mya\Utils\FileHandler.cpp" />
     <ClCompile Include="Mya\Utils\FPS.cpp" />
     <ClCompile Include="Mya\Utils\Timer.cpp" />
   </ItemGroup>
@@ -185,6 +186,7 @@
     <ClInclude Include="Mya\Network\Network.h" />
     <ClInclude Include="Mya\Sound\Music.h" />
     <ClInclude Include="Mya\Sound\Sound.h" />
+    <ClInclude Include="Mya\Utils\FileHandler.h" />
     <ClInclude Include="Mya\Utils\FPS.h" />
     <ClInclude Include="Mya\Utils\Timer.h" />
   </ItemGroup>
