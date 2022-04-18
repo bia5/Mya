@@ -98,7 +98,7 @@ void Animation::render(SDL_Renderer* renderer, int w, int h) {
 	}
 }
 
-void Animation::render(SDL_Renderer* renderer, int w, int h, bool f) {
+void Animation::render(SDL_Renderer* renderer, int w, int h, double angle, bool f) {
 	overall += (std::clock() - timer);
 	while (overall >= timepertick) {
 		overall -= timepertick;
@@ -122,9 +122,9 @@ void Animation::render(SDL_Renderer* renderer, int w, int h, bool f) {
 
 	if (canRRender) {
 		if (f)
-			SDL_RenderCopyEx(renderer, tex->getTexture(), NULL, &a, 0.0, NULL, SDL_FLIP_HORIZONTAL);
+			SDL_RenderCopyEx(renderer, tex->getTexture(), NULL, &a, angle, NULL, SDL_FLIP_HORIZONTAL);
 		else
-			SDL_RenderCopy(renderer, tex->getTexture(), NULL, &a);
+			SDL_RenderCopyEx(renderer, tex->getTexture(), NULL, &a, angle, NULL, SDL_FLIP_NONE);
 
 		if (renderBounds) {
 			SDL_SetRenderDrawColor(renderer, 0, 69, 0, 0);
@@ -192,7 +192,7 @@ void Animation::lua_render(void* rrenderer, int w, int h) {
 	}
 }
 
-void Animation::lua_renderFlip(void* rrenderer, int w, int h, bool f) {
+void Animation::lua_renderFlip(void* rrenderer, int w, int h, double angle, bool f) {
 	overall += (std::clock() - timer);
 	while (overall >= timepertick) {
 		overall -= timepertick;
@@ -218,9 +218,9 @@ void Animation::lua_renderFlip(void* rrenderer, int w, int h, bool f) {
 
 	if (canRRender) {
 		if (f)
-			SDL_RenderCopyEx(renderer, tex->getTexture(), NULL, &a, 0.0, NULL, SDL_FLIP_HORIZONTAL);
+			SDL_RenderCopyEx(renderer, tex->getTexture(), NULL, &a, angle, NULL, SDL_FLIP_HORIZONTAL);
 		else
-			SDL_RenderCopy(renderer, tex->getTexture(), NULL, &a);
+			SDL_RenderCopyEx(renderer, tex->getTexture(), NULL, &a, angle, NULL, SDL_FLIP_NONE);
 
 		if (renderBounds) {
 			SDL_SetRenderDrawColor(renderer, outlineColor1, outlineColor2, outlineColor3, outlineColor4);

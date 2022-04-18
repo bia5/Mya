@@ -25,12 +25,12 @@ public:
 	//Sprite Shit
 	virtual void render(SDL_Renderer*);
 	virtual void render(SDL_Renderer*, int, int);
-	virtual void render(SDL_Renderer*, int, int, bool);
+	virtual void render(SDL_Renderer*, int, int, double, bool);
 	virtual void renderWithBounds(SDL_Renderer*);
 
 	//Lua Compat
 	virtual void lua_render(void*, int, int);
-	virtual void lua_renderFlip(void*, int, int, bool);
+	virtual void lua_renderFlip(void*, int, int, double, bool);
 	virtual void lua_renderDefault(void*);
 
 private:

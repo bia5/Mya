@@ -68,7 +68,7 @@ void Sprite::render(SDL_Renderer* renderer, int w, int h) {
 	}
 }
 
-void Sprite::render(SDL_Renderer* renderer, int w, int h, bool f) {
+void Sprite::render(SDL_Renderer* renderer, int w, int h, double angle, bool f) {
 	SDL_Rect a;
 	a.x = x;
 	a.y = y;
@@ -82,9 +82,9 @@ void Sprite::render(SDL_Renderer* renderer, int w, int h, bool f) {
 
 	if (canRRender) {
 		if (f)
-			SDL_RenderCopyEx(renderer, tex->getTexture(), NULL, &a, 0.0, NULL, SDL_FLIP_HORIZONTAL);
+			SDL_RenderCopyEx(renderer, tex->getTexture(), NULL, &a, angle, NULL, SDL_FLIP_HORIZONTAL);
 		else
-			SDL_RenderCopy(renderer, tex->getTexture(), NULL, &a);
+			SDL_RenderCopyEx(renderer, tex->getTexture(), NULL, &a, angle, NULL, SDL_FLIP_NONE);
 
 		if (renderBounds) {
 			SDL_SetRenderDrawColor(renderer, 0, 69, 0, 0);
@@ -177,7 +177,7 @@ void Sprite::lua_render(void* rrenderer, int w, int h) {
 	}
 }
 
-void Sprite::lua_renderFlip(void* rrenderer, int w, int h, bool f) {
+void Sprite::lua_renderFlip(void* rrenderer, int w, int h, double angle, bool f) {
 	SDL_Renderer* renderer = (SDL_Renderer*)rrenderer;
 
 	SDL_Rect a;
@@ -193,9 +193,9 @@ void Sprite::lua_renderFlip(void* rrenderer, int w, int h, bool f) {
 
 	if (canRRender) {
 		if (f)
-			SDL_RenderCopyEx(renderer, tex->getTexture(), NULL, &a, 0.0, NULL, SDL_FLIP_HORIZONTAL);
+			SDL_RenderCopyEx(renderer, tex->getTexture(), NULL, &a, angle, NULL, SDL_FLIP_HORIZONTAL);
 		else
-			SDL_RenderCopy(renderer, tex->getTexture(), NULL, &a);
+			SDL_RenderCopyEx(renderer, tex->getTexture(), NULL, &a, angle, NULL, SDL_FLIP_NONE);
 
 		if (renderBounds) {
 			SDL_SetRenderDrawColor(renderer, outlineColor1, outlineColor2, outlineColor3, outlineColor4);
