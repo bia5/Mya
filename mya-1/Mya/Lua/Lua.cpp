@@ -124,7 +124,10 @@ void Lua::loadGraphics() {
 		"setX", &Animation::setX,
 		"setY", &Animation::setY,
 		"isColliding", &Animation::isColliding,
-		"isPointColliding", &Animation::isPointColliding);
+		"isPointColliding", &Animation::isPointColliding,
+		"setLooped", &Animation::setLooped,
+		"isFinished", &Animation::isFinished,
+		"reset", &Animation::reset);
 
 	lua.new_usertype<FileHandler>("FileHandler",
 		sol::constructors<FileHandler()>(),

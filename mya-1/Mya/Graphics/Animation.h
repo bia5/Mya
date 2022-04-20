@@ -15,12 +15,17 @@ public:
 	std::clock_t timer; //To help keep track of milliseconds since last frame switch :D
 	int overall; //Combine all time to keep everything balanced, like all things should be
 	int timepertick = 33; // How long does the timer have until we update the frame
+	bool loop = true;
+	bool finished = false;
 
 	Animation(std::string texid, int framess, int fpss, Assets* ass);
 
 	void setFrame(int f);
 	void setTexID(std::string id);
 	void setFPS(int f);
+	void setLooped(bool p);
+	bool isFinished();
+	void reset();
 
 	//Sprite Shit
 	virtual void render(SDL_Renderer*);
