@@ -1,0 +1,1 @@
+C:\Users\Alex\Desktop\emsdk\upstream\emscripten\em++ Main.cpp Mya/mya.cpp Mya/Utils/FPS.cpp Mya/Utils/Timer.cpp -o hello.html

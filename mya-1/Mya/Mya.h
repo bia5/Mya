@@ -4,7 +4,6 @@
 #include <string>
 #include <SDL.h>
 #undef main
-#include <SDL_net.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
@@ -12,13 +11,11 @@
 #include "Utils/FPS.h"
 #include "Utils/Timer.h"
 #include "Assets.h"
-#include "Lua/Lua.h"
 
 class Mya {
 public:
-	const char* VERSION = "Mya 1.5.0 Beta (Codename: Leo)";
+	const char* VERSION = "Mya Web 1.5.0 Beta (Codename: Leo)";
 	static Assets* assets;
-	static Lua* lua;
 
 	Timer deltaTimer;
 	Timer trueDeltaTimer;
@@ -27,12 +24,9 @@ public:
 	int SCREEN_WIDTH = 1280, SCREEN_HEIGHT = 720;
 	int osw = 1280, osh = 720;
 	bool isServer = false;
-	
-	SDL_Joystick* joystick;
 
 	Mya();
 
-	void initLua();
 	bool init(std::string, int, int);
 	void update();
 	void render();

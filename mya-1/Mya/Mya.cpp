@@ -3,19 +3,10 @@
 bool Mya::run = NULL;
 bool Mya::fullscreen = NULL;
 Assets* Mya::assets = NULL;
-Lua* Mya::lua = NULL;
 
 Mya::Mya() {
 	renderer = nullptr;
 	window = nullptr;
-}
-
-void Mya::initLua() {
-	lua = new Lua();
-	lua->loadMya(this);
-	lua->loadGraphics();
-	lua->loadNetwork();
-	lua->loadAudio();
 }
 
 bool Mya::init(std::string title, int w, int h) {
@@ -29,9 +20,6 @@ bool Mya::init(std::string title, int w, int h) {
 		run = false;
 	} else if (TTF_Init() == -1) {
 		printf("SDL_ttf could not initialize!SDL_ttf Error : %s\n", TTF_GetError());
-		run = false;
-	} else if (SDLNet_Init() == -1) {
-		printf("SDLNet could not initialize!SDLNet Error : %s\n", SDLNet_GetError());
 		run = false;
 	} else {
 		window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
@@ -58,25 +46,6 @@ bool Mya::init(std::string title, int w, int h) {
 
 					assets = new Assets(this);
 
-					//Add joystick
-					if (!joystick) {
-						std::cout << "Searching for joysticks\n";
-						for (int i = 0; i < SDL_NumJoysticks(); i++) {
-							joystick = SDL_JoystickOpen(i);
-
-							if (joystick) {
-								std::cout << "Joystick found: " << i << ", name: ";
-								printf("%s\n", SDL_JoystickName(joystick));
-								break;
-							}
-							else
-								std::cout << "Error IN Mya::init, with SDL_GameControllerOpen: " << SDL_GetError() << std::endl;
-						}
-					}
-
-					if (!joystick)
-						std::cout << "No joystick found.\n";
-
 					timepertick = 1000 / ups;
 					timer = std::clock();
 					SDL_StartTextInput();
@@ -94,16 +63,11 @@ void Mya::update() {
 	overall += (std::clock() - timer);
 	while (overall >= timepertick) {
 		overall -= timepertick;
-		lua->exec("if event_tupdate ~= nil then event_tupdate() end");
 	}
 	timer = std::clock();
 
 	deltaTimer.start();
 	SDL_Event e;
-
-	if(SDL_JoystickGetButton(joystick, 0)) {
-		std::cout << "Button 0 pressed" << std::endl;
-	}
 
 	fps.update();
 	while (SDL_PollEvent(&e) != 0) {
@@ -111,50 +75,16 @@ void Mya::update() {
 			exit();
 		}
 		if (e.type == SDL_KEYDOWN) {
-			char k = 0;
-
-			k = e.key.keysym.sym;
-			sol::function event_keyDown = lua->lua["event_keyDown"];
-			if (event_keyDown != sol::nil) {
-				if (e.key.keysym.sym == SDLK_LSHIFT)
-					event_keyDown("LSHIFT");
-				else if (e.key.keysym.sym == SDLK_RSHIFT)
-					event_keyDown("RSHIFT");
-				else
-					event_keyDown(SDL_GetKeyName(k));
-			} else
-				std::cout << "event_keyDown not registered\n";
 		}
 		if (e.type == SDL_KEYUP) {
-			char k = 0;
-
-			k = e.key.keysym.sym;
-
-			sol::function event_keyDown = lua->lua["event_keyUp"];
-			if (event_keyDown != sol::nil) {
-				if (e.key.keysym.sym == SDLK_LSHIFT)
-					event_keyDown("LSHIFT");
-				else if (e.key.keysym.sym == SDLK_RSHIFT)
-					event_keyDown("RSHIFT");
-				else
-					event_keyDown(SDL_GetKeyName(k));
-			} else
-				std::cout << "event_keyUp not registered\n";
 		}
 		if (e.type == SDL_WINDOWEVENT)
 			if (e.window.event == SDL_WINDOWEVENT_RESIZED) {
 				SDL_GetWindowSize(window, &SCREEN_WIDTH, &SCREEN_HEIGHT);
-				
-				sol::function event_keyDown = lua->lua["event_windowResize"];
-				if (event_keyDown != sol::nil)
-					event_keyDown(SCREEN_WIDTH, SCREEN_HEIGHT);
-				else
-					std::cout << "event_windowResize not registered\n";
 			}
 		if (e.type == SDL_MOUSEMOTION) {
 			int x, y;
 			SDL_GetMouseState(&x, &y);
-			lua->exec("if event_mouseMotion ~= nil then event_mouseMotion(" + std::to_string(x) + "," + std::to_string(y) + ") end");
 		}
 		if (e.type == SDL_MOUSEBUTTONDOWN) {
 			std::string k = "null";
@@ -179,12 +109,6 @@ void Mya::update() {
 				k = "null";
 				break;
 			}
-
-			sol::function event_mouseButtonDown = lua->lua["event_mouseButtonDown"];
-			if (event_mouseButtonDown != sol::nil)
-				event_mouseButtonDown(k);
-			else
-				std::cout << "event_mouseButtonDown not registered\n";
 		}
 		if (e.type == SDL_MOUSEBUTTONUP) {
 			std::string k = "null";
@@ -209,59 +133,14 @@ void Mya::update() {
 					k = "null";
 					break;
 			}
-
-			sol::function event_mouseButtonDown = lua->lua["event_mouseButtonUp"];
-			if (event_mouseButtonDown != sol::nil)
-				event_mouseButtonDown(k);
-			else
-				std::cout << "event_mouseButtonUp not registered\n";
 		}
 		if (e.type == SDL_MOUSEBUTTONUP) {
 			
 		}
 		if (e.type == SDL_MOUSEWHEEL) {
-			
-		}
-		if (e.type == SDL_JOYDEVICEADDED) {
-			std::cout << "Joystick inserted: " << e.jdevice.which << "\n";
-			
-			if (!joystick) {
-				std::cout << "Searching for joysticks\n";
-				for (int i = 0; i < SDL_NumJoysticks(); i++) {
-					joystick = SDL_JoystickOpen(i);
 
-					if (joystick) {
-						std::cout << "Joystick found: " << i << ", name: ";
-						printf("%s\n", SDL_JoystickName(joystick));
-						break;
-					}
-					else
-						std::cout << "Error IN Mya::init, with SDL_GameControllerOpen: " << SDL_GetError() << std::endl;
-				}
-			}
-		}
-		if (e.type == SDL_JOYDEVICEREMOVED) {
-			std::cout << "Joystick removed: " << e.jdevice.which << "\n";
-			joystick = NULL;
-			
-			if (!joystick) {
-				std::cout << "Searching for joysticks\n";
-				for (int i = 0; i < SDL_NumJoysticks(); i++) {
-					joystick = SDL_JoystickOpen(i);
-
-					if (joystick) {
-						std::cout << "Joystick found: " << i << ", name: ";
-						printf("%s\n", SDL_JoystickName(joystick));
-						break;
-					}
-					else
-						std::cout << "Error IN Mya::init, with SDL_GameControllerOpen: " << SDL_GetError() << std::endl;
-				}
-			}
 		}
 	}
-
-	lua->exec("if event_update ~= nil then event_update() end");
 }
 
 void Mya::render() {
@@ -269,13 +148,10 @@ void Mya::render() {
 	fps.frames++;
 	SDL_RenderClear(renderer);
 
-	lua->exec("if event_render ~= nil then event_render() end");
-
 	SDL_RenderPresent(renderer);
 }
 
 void Mya::exit() {
-	lua->exec("if event_quit ~= nil then event_quit() end");
 	run = false;
 }
 
@@ -294,7 +170,6 @@ void Mya::close() {
 
 	Mix_Quit();
 	IMG_Quit();
-	SDLNet_Quit();
 	SDL_Quit();
 }
 
@@ -307,19 +182,13 @@ void Mya::setFullscreen(bool b) {
 		osh = getHeight();
 		SDL_SetWindowSize(window, DM.w, DM.h);
 		SDL_GetWindowSize(window, &SCREEN_WIDTH, &SCREEN_HEIGHT);
-		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+		//SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
 	} else {
-		SDL_SetWindowFullscreen(window, SDL_WINDOW_FOREIGN);
+		//SDL_SetWindowFullscreen(window, SDL_WINDOW_FOREIGN);
 		SDL_SetWindowSize(window, osw, osh);
 		SDL_GetWindowSize(window, &SCREEN_WIDTH, &SCREEN_HEIGHT);
 	}
 	fullscreen = b;
-
-	sol::function event_keyDown = lua->lua["event_windowResize"];
-	if (event_keyDown != sol::nil)
-		event_keyDown(SCREEN_WIDTH, SCREEN_HEIGHT);
-	else
-		std::cout << "event_windowResize not registered\n";
 }
 
 bool Mya::getFullscreen() {
@@ -339,7 +208,7 @@ void Mya::setWindowTitle(std::string text){
 }
 
 void Mya::setWindowIcon(std::string tex) {
-	std::string p = SDL_GetBasePath()+tex;
+	std::string p = "" + tex;
 	SDL_SetWindowIcon(window, IMG_Load(p.c_str()));
 }
 
@@ -359,7 +228,7 @@ int Mya::getHeight()
 
 std::string Mya::getPath()
 {
-	return (std::string)SDL_GetBasePath();
+	return "";
 }
 
 void Mya::setRenderDrawColor(int r, int g, int b, int a)

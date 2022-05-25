@@ -27,12 +27,6 @@
     <ClCompile Include="Mya\Graphics\TextView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Mya\Lua\Lua.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mya\Network\Network.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Mya\Sound\Music.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -57,18 +51,6 @@
     <ClCompile Include="Mya\Graphics\Animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Mya\Game\Col\ColTile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mya\Game\Col\ColEntity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mya\Game\Col\ColChunk.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mya\Game\Col\ColWorld.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Mya\Utils\FileHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -84,12 +66,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Mya\Graphics\TextView.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mya\Lua\Lua.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mya\Network\Network.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Mya\Sound\Music.h">
@@ -111,18 +87,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Mya\Graphics\Animation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mya\Game\Col\ColTile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mya\Game\Col\ColEntity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mya\Game\Col\ColChunk.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mya\Game\Col\ColWorld.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Mya\Utils\FileHandler.h">
