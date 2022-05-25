@@ -19,5 +19,4 @@ public:
 	void loadGraphics();
 	void loadNetwork();
 	void loadAudio();
-	void loadCol();
 };

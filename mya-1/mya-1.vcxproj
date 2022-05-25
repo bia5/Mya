@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -82,6 +82,8 @@
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>G:\My Drive\dep\include;$(IncludePath)</IncludePath>
     <LibraryPath>G:\My Drive\dep\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>C:\Users\Alex\Desktop\Github\Partisan\</OutDir>
+    <TargetName>Partisan</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -150,10 +152,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Mya\Game\Col\ColChunk.cpp" />
-    <ClCompile Include="Mya\Game\Col\ColEntity.cpp" />
-    <ClCompile Include="Mya\Game\Col\ColTile.cpp" />
-    <ClCompile Include="Mya\Game\Col\ColWorld.cpp" />
     <ClCompile Include="Mya\Graphics\Animation.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Mya\Assets.cpp" />
@@ -171,10 +169,6 @@
     <ClCompile Include="Mya\Utils\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Mya\Game\Col\ColChunk.h" />
-    <ClInclude Include="Mya\Game\Col\ColEntity.h" />
-    <ClInclude Include="Mya\Game\Col\ColTile.h" />
-    <ClInclude Include="Mya\Game\Col\ColWorld.h" />
     <ClInclude Include="Mya\Graphics\Animation.h" />
     <ClInclude Include="Mya\Assets.h" />
     <ClInclude Include="Mya\Graphics\Font.h" />

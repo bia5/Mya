@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
 		}
 	}
 
-	sol::load_result lr = mya.lua->lua.load_file("lua\\main.lua");
+	sol::load_result lr = mya.lua->lua.load_file("lua/main.lua");
 	if (!lr.valid()) {
 		sol::error err = lr;
 		std::string what = err.what();
@@ -36,8 +36,7 @@ int main(int argc, char* argv[]) {
 			std::string what = err.what();
 			std::cout << "call failed, sol::error::what() is " << what << std::endl;
 			system("pause");
-		}
-		else
+		} else
 			std::cout << "OK" << std::endl;
 	}
 
