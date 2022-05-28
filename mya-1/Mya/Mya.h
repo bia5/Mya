@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include <iostream>
 #include <string>
 #include <SDL.h>
@@ -11,6 +12,11 @@
 #include "Utils/FPS.h"
 #include "Utils/Timer.h"
 #include "Assets.h"
+
+#include "Graphics/Font.h"
+#include "Graphics/TextView.h"
+
+#include "Graphics/Sprite.h"
 
 class Mya {
 public:
@@ -25,9 +31,13 @@ public:
 	int osw = 1280, osh = 720;
 	bool isServer = false;
 
+	TextView* tv;
+	Sprite* sprite;
+
 	Mya();
 
 	bool init(std::string, int, int);
+	bool loop();
 	void update();
 	void render();
 	void exit();
@@ -70,5 +80,5 @@ private:
 	std::clock_t timer; //To help keep track of milliseconds since last update :D
 	int overall; //Combine all time to keep everything balanced, like all things should be
 	int timepertick = 33; // How long does the timer have until we call another update
-	int ups = 60; //how many times per second to call update
+	int ups = 1; //how many times per second to call update
 };

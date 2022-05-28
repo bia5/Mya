@@ -1,21 +1,19 @@
-#include <iostream>
-
 #include "Mya\Mya.h"
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
 
-int main(int argc, char* argv[]) {
-	srand(time(NULL));
-
+int main() {
 	Mya mya;
-
-	bool run = mya.init("Partisan", 1280, 720);
-	
-	if (run) {
-		while (mya.isRunning()) {
-			mya.update();
-			mya.render();
-		}
-		mya.close();
+	mya.init("Partisan", 1280, 720);
+	while (mya.isRunning()) {
+		mya.update();
+		mya.render();
+#ifdef __EMSCRIPTEN__
+		emscripten_sleep(0);
+#endif
 	}
+	//mya.close();
 
-	return 1;
+	return 0;
 }

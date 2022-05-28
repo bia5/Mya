@@ -55,13 +55,17 @@ void Animation::render(SDL_Renderer* renderer) {
 	while (overall >= timepertick) {
 		overall -= timepertick;
 		frame++;
-		if (frame > frames)
-			if(loop)
+		if (frame > frames) {
+			if (loop) {
 				frame = 0;
-			else
+			}
+			else {
 				finished = true;
-		if (!finished)
+			}
+		}
+		if (!finished) {
 			tex = assets->getTexture(texID + std::to_string(frame));
+		}
 	}
 	timer = std::clock();
 
@@ -73,8 +77,9 @@ void Animation::render(SDL_Renderer* renderer) {
 	w = a.w;
 	h = a.h;
 
-	if (autoSetBounds)
+	if (autoSetBounds) {
 		bounds = a;
+	}
 
 	if (canRRender && !finished) {
 		SDL_RenderCopy(renderer, tex->getTexture(), NULL, &a);
@@ -91,13 +96,17 @@ void Animation::render(SDL_Renderer* renderer, int w, int h) {
 	while (overall >= timepertick) {
 		overall -= timepertick;
 		frame++;
-		if (frame > frames)
-			if (loop)
+		if (frame > frames) {
+			if (loop) {
 				frame = 0;
-			else
+			}
+			else {
 				finished = true;
-		if (!finished)
+			}
+		}
+		if (!finished) {
 			tex = assets->getTexture(texID + std::to_string(frame));
+		}
 	}
 	timer = std::clock();
 
@@ -109,8 +118,9 @@ void Animation::render(SDL_Renderer* renderer, int w, int h) {
 	this->w = w;
 	this->h = h;
 
-	if (autoSetBounds)
+	if (autoSetBounds) {
 		bounds = a;
+	}
 
 	if (canRRender && !finished) {
 		SDL_RenderCopy(renderer, tex->getTexture(), NULL, &a);
@@ -127,13 +137,17 @@ void Animation::render(SDL_Renderer* renderer, int w, int h, double angle, bool 
 	while (overall >= timepertick) {
 		overall -= timepertick;
 		frame++;
-		if (frame > frames)
-			if (loop)
+		if (frame > frames) {
+			if (loop) {
 				frame = 0;
-			else
+			}
+			else {
 				finished = true;
-		if (!finished)
+			}
+		}
+		if (!finished) {
 			tex = assets->getTexture(texID + std::to_string(frame));
+		}
 	}
 	timer = std::clock();
 
@@ -145,15 +159,18 @@ void Animation::render(SDL_Renderer* renderer, int w, int h, double angle, bool 
 	this->w = w;
 	this->h = h;
 
-	if (autoSetBounds)
+	if (autoSetBounds) {
 		bounds = a;
+	}
 
 	if (canRRender && !finished) {
-		if (f)
+		if (f) {
 			SDL_RenderCopyEx(renderer, tex->getTexture(), NULL, &a, angle, NULL, SDL_FLIP_HORIZONTAL);
-		else
+		}
+		else {
 			SDL_RenderCopyEx(renderer, tex->getTexture(), NULL, &a, angle, NULL, SDL_FLIP_NONE);
-
+		}
+		
 		if (renderBounds) {
 			SDL_SetRenderDrawColor(renderer, 0, 69, 0, 0);
 			SDL_RenderFillRect(renderer, &bounds);
@@ -167,13 +184,17 @@ void Animation::renderWithBounds(SDL_Renderer* renderer) {
 	while (overall >= timepertick) {
 		overall -= timepertick;
 		frame++;
-		if (frame > frames)
-			if (loop)
+		if (frame > frames) {
+			if (loop) {
 				frame = 0;
-			else
+			}
+			else {
 				finished = true;
-		if (!finished)
+			}
+		}
+		if (!finished) {
 			tex = assets->getTexture(texID + std::to_string(frame));
+		}
 	}
 	timer = std::clock();
 

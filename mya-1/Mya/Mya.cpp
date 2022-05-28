@@ -10,9 +10,10 @@ Mya::Mya() {
 }
 
 bool Mya::init(std::string title, int w, int h) {
+	std::cout << "Initializing Mya...\n";
 	SCREEN_WIDTH = w;
 	SCREEN_HEIGHT = h;
-	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK)) {
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO)) {
 		std::cout << "Error IN Mya::init, with SDL_Init: " << SDL_GetError() << std::endl;
 		run = false;
 	} else if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
@@ -49,6 +50,15 @@ bool Mya::init(std::string title, int w, int h) {
 					timepertick = 1000 / ups;
 					timer = std::clock();
 					SDL_StartTextInput();
+					tv = new TextView(Font("assets/font.ttf", 64), "Hai", 0, 0, renderer);
+					
+					assets->loadTexture("logo", "assets/art/art_logo.png");
+					sprite = new Sprite(assets->getTexture("logo"));
+					sprite->x = 0;
+					sprite->y = 0;
+					sprite->w = 100;
+					sprite->h = 100;
+					
 					std::cout << "Sucessfully started " << VERSION << "!" << std::endl;
 					
 					run = true;
@@ -57,6 +67,13 @@ bool Mya::init(std::string title, int w, int h) {
 		}
 	}
 	return run;
+}
+
+bool Mya::loop()
+{
+	update();
+	render();
+	return isRunning();
 }
 
 void Mya::update() {
@@ -147,6 +164,10 @@ void Mya::render() {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	fps.frames++;
 	SDL_RenderClear(renderer);
+
+	sprite->render(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
+	tv->setText("FPS: " + std::to_string(fps.fps), renderer);
+	tv->render(renderer);
 
 	SDL_RenderPresent(renderer);
 }

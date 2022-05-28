@@ -1,7 +1,9 @@
 #include "TextView.h"
 
+#include "../Mya.h"
+
 TextView::TextView(Font _font, std::string _string, int _x, int _y, SDL_Renderer* _renderer) {
-	color = { 0, 0, 169 };
+	color = { 255, 255, 255 };
 	font = _font;
 	text = _string;
 	x = _x;
@@ -11,7 +13,7 @@ TextView::TextView(Font _font, std::string _string, int _x, int _y, SDL_Renderer
 
 TextView::TextView(Font _font, std::string _string, int _x, int _y, void* r) {
 	SDL_Renderer* _renderer = (SDL_Renderer*)r;
-	color = { 0, 0, 169 };
+	color = { 255, 255, 255 };
 	font = _font;
 	text = _string;
 	x = _x;

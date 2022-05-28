@@ -5,7 +5,7 @@
 
 #include "Font.h"
 #include "Texture.h"
-#include "../Mya.h"
+
 
 class TextView {
 public:
