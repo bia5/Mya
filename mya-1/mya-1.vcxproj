@@ -159,6 +159,7 @@
     <ClCompile Include="Mya\Graphics\Sprite.cpp" />
     <ClCompile Include="Mya\Graphics\Texture.cpp" />
     <ClCompile Include="Mya\Graphics\TextView.cpp" />
+    <ClCompile Include="Mya\Lua\Lua.cpp" />
     <ClCompile Include="Mya\Mya.cpp" />
     <ClCompile Include="Mya\Sound\Music.cpp" />
     <ClCompile Include="Mya\Sound\Sound.cpp" />
@@ -173,6 +174,10 @@
     <ClInclude Include="Mya\Graphics\Sprite.h" />
     <ClInclude Include="Mya\Graphics\Texture.h" />
     <ClInclude Include="Mya\Graphics\TextView.h" />
+    <ClInclude Include="Mya\Lua\Lua.h" />
+    <ClInclude Include="Mya\Lua\sol\config.hpp" />
+    <ClInclude Include="Mya\Lua\sol\forward.hpp" />
+    <ClInclude Include="Mya\Lua\sol\sol.hpp" />
     <ClInclude Include="Mya\Mya.h" />
     <ClInclude Include="Mya\Sound\Music.h" />
     <ClInclude Include="Mya\Sound\Sound.h" />

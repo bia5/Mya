@@ -219,8 +219,9 @@ void Animation::lua_render(void* rrenderer, int w, int h) {
 		if (frame > frames)
 			if (loop)
 				frame = 0;
-			else
+			else {
 				finished = true;
+			}
 		if (!finished)
 			tex = assets->getTexture(texID + std::to_string(frame));
 	}
@@ -255,10 +256,12 @@ void Animation::lua_renderFlip(void* rrenderer, int w, int h, double angle, bool
 		overall -= timepertick;
 		frame++;
 		if (frame > frames)
-			if (loop)
+			if (loop) {
 				frame = 0;
-			else
+			}
+			else {
 				finished = true;
+			}
 		if (!finished)
 			tex = assets->getTexture(texID + std::to_string(frame));
 	}

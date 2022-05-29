@@ -1,8 +1,10 @@
 dep-windows/
 Release/
 assets/
+sol/
 .vs/
 *.data
 *.html
 *.js
 *.wasm
+*.a

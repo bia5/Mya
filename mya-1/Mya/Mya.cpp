@@ -58,6 +58,11 @@ bool Mya::init(std::string title, int w, int h) {
 					sprite->y = 0;
 					sprite->w = 100;
 					sprite->h = 100;
+
+					lua = new Lua();
+					lua->loadMya(this);
+					lua->loadGraphics();
+					lua->loadAudio();
 					
 					std::cout << "Sucessfully started " << VERSION << "!" << std::endl;
 					

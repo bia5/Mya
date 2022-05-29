@@ -18,6 +18,8 @@
 
 #include "Graphics/Sprite.h"
 
+#include "Lua/Lua.h"
+
 class Mya {
 public:
 	const char* VERSION = "Mya Web 1.5.0 Beta (Codename: Leo)";
@@ -33,6 +35,8 @@ public:
 
 	TextView* tv;
 	Sprite* sprite;
+
+	Lua* lua;
 
 	Mya();
 

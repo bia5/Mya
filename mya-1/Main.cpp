@@ -9,6 +9,7 @@ int main() {
 	while (mya.isRunning()) {
 		mya.update();
 		mya.render();
+		mya.lua->exec("print('hai from lua')");
 #ifdef __EMSCRIPTEN__
 		emscripten_sleep(0);
 #endif
