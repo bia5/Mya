@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "sol/sol.hpp"
+#include <sol/sol.hpp>
 
 class Mya;
 
@@ -16,5 +16,6 @@ public:
 
 	void loadMya(Mya*);
 	void loadGraphics();
+	void loadNetwork();
 	void loadAudio();
 };

@@ -3,6 +3,7 @@ Release/
 assets/
 sol/
 .vs/
+lua/
 *.data
 *.html
 *.js

@@ -4,9 +4,11 @@ FileHandler::FileHandler() {}
 
 std::vector<std::string> FileHandler::listDir(std::string folder) {
 	std::vector<std::string> paths;
-	for (std::filesystem::recursive_directory_iterator i(folder), end; i != end; ++i)
-		if (!is_directory(i->path()))
+	for (std::filesystem::recursive_directory_iterator i(folder), end; i != end; ++i) {
+		if (!is_directory(i->path())) {
 			paths.push_back(i->path().u8string());
+		}
+	}
 	return paths;
 }
 

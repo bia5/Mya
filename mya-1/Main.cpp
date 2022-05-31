@@ -1,20 +1,24 @@
 #include "Mya\Mya.h"
-#ifdef __EMSCRIPTEN__
-#include <emscripten.h>
-#endif
 
 int main() {
 	Mya mya;
-	mya.init("Partisan", 1280, 720);
-	while (mya.isRunning()) {
-		mya.update();
-		mya.render();
-		mya.lua->exec("print('hai from lua')");
-#ifdef __EMSCRIPTEN__
-		emscripten_sleep(0);
-#endif
+	mya.initLua();
+	sol::load_result lr = mya.lua->lua.load_file("lua/main.lua");
+	if (!lr.valid()) {
+		sol::error err = lr;
+		std::string what = err.what();
+		std::cout << "call failed, sol::error::what() is " << what << std::endl;
 	}
-	//mya.close();
+	else {
+		sol::protected_function_result result1 = lr();
+		if (!result1.valid()) {
+			sol::error err = result1;
+			std::string what = err.what();
+			std::cout << "call failed, sol::error::what() is " << what << std::endl;
+		}
+		else
+			std::cout << "OK" << std::endl;
+	}
 
 	return 0;
 }

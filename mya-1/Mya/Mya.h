@@ -5,6 +5,7 @@
 #include <string>
 #include <SDL.h>
 #undef main
+#include <SDL_net.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
@@ -12,11 +13,6 @@
 #include "Utils/FPS.h"
 #include "Utils/Timer.h"
 #include "Assets.h"
-
-#include "Graphics/Font.h"
-#include "Graphics/TextView.h"
-
-#include "Graphics/Sprite.h"
 
 #include "Lua/Lua.h"
 
@@ -33,13 +29,11 @@ public:
 	int osw = 1280, osh = 720;
 	bool isServer = false;
 
-	TextView* tv;
-	Sprite* sprite;
-
-	Lua* lua;
+	static Lua* lua;
 
 	Mya();
 
+	void initLua();
 	bool init(std::string, int, int);
 	bool loop();
 	void update();

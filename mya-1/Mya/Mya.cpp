@@ -1,28 +1,46 @@
 #include "Mya.h"
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
 
 bool Mya::run = NULL;
 bool Mya::fullscreen = NULL;
 Assets* Mya::assets = NULL;
+Lua* Mya::lua = NULL;
 
 Mya::Mya() {
 	renderer = nullptr;
 	window = nullptr;
 }
 
+void Mya::initLua() {
+	lua = new Lua();
+	lua->loadMya(this);
+	lua->loadGraphics();
+	lua->loadNetwork();
+	lua->loadAudio();
+}
+
 bool Mya::init(std::string title, int w, int h) {
-	std::cout << "Initializing Mya...\n";
 	SCREEN_WIDTH = w;
 	SCREEN_HEIGHT = h;
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO)) {
 		std::cout << "Error IN Mya::init, with SDL_Init: " << SDL_GetError() << std::endl;
 		run = false;
-	} else if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
+	}
+	else if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
 		std::cout << "Error IN Mya::init, with IMG_Init: " << IMG_GetError() << std::endl;
 		run = false;
-	} else if (TTF_Init() == -1) {
+	}
+	else if (TTF_Init() == -1) {
 		printf("SDL_ttf could not initialize!SDL_ttf Error : %s\n", TTF_GetError());
 		run = false;
-	} else {
+	}
+	else if (SDLNet_Init() == -1) {
+		printf("SDLNet could not initialize!SDLNet Error : %s\n", SDLNet_GetError());
+		run = false;
+	}
+	else {
 		window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 		if (window == NULL) {
 			std::cout << "Error IN Mya::init, with SDL_CreateWindow: " << SDL_GetError() << std::endl;
@@ -50,22 +68,8 @@ bool Mya::init(std::string title, int w, int h) {
 					timepertick = 1000 / ups;
 					timer = std::clock();
 					SDL_StartTextInput();
-					tv = new TextView(Font("assets/font.ttf", 64), "Hai", 0, 0, renderer);
-					
-					assets->loadTexture("logo", "assets/art/art_logo.png");
-					sprite = new Sprite(assets->getTexture("logo"));
-					sprite->x = 0;
-					sprite->y = 0;
-					sprite->w = 100;
-					sprite->h = 100;
-
-					lua = new Lua();
-					lua->loadMya(this);
-					lua->loadGraphics();
-					lua->loadAudio();
-					
 					std::cout << "Sucessfully started " << VERSION << "!" << std::endl;
-					
+
 					run = true;
 				}
 			}
@@ -82,9 +86,9 @@ bool Mya::loop()
 }
 
 void Mya::update() {
-	overall += (std::clock() - timer);
-	while (overall >= timepertick) {
-		overall -= timepertick;
+	overall = (std::clock() - timer);
+	if(overall >= timepertick) {
+		lua->exec("if event_tupdate ~= nil then event_tupdate() end");
 	}
 	timer = std::clock();
 
@@ -97,16 +101,52 @@ void Mya::update() {
 			exit();
 		}
 		if (e.type == SDL_KEYDOWN) {
+			char k = 0;
+
+			k = e.key.keysym.sym;
+			sol::function event_keyDown = lua->lua["event_keyDown"];
+			if (event_keyDown != sol::nil) {
+				if (e.key.keysym.sym == SDLK_LSHIFT)
+					event_keyDown("LSHIFT");
+				else if (e.key.keysym.sym == SDLK_RSHIFT)
+					event_keyDown("RSHIFT");
+				else
+					event_keyDown(SDL_GetKeyName(k));
+			}
+			else
+				std::cout << "event_keyDown not registered\n";
 		}
 		if (e.type == SDL_KEYUP) {
+			char k = 0;
+
+			k = e.key.keysym.sym;
+
+			sol::function event_keyDown = lua->lua["event_keyUp"];
+			if (event_keyDown != sol::nil) {
+				if (e.key.keysym.sym == SDLK_LSHIFT)
+					event_keyDown("LSHIFT");
+				else if (e.key.keysym.sym == SDLK_RSHIFT)
+					event_keyDown("RSHIFT");
+				else
+					event_keyDown(SDL_GetKeyName(k));
+			}
+			else
+				std::cout << "event_keyUp not registered\n";
 		}
 		if (e.type == SDL_WINDOWEVENT)
 			if (e.window.event == SDL_WINDOWEVENT_RESIZED) {
 				SDL_GetWindowSize(window, &SCREEN_WIDTH, &SCREEN_HEIGHT);
+
+				sol::function event_keyDown = lua->lua["event_windowResize"];
+				if (event_keyDown != sol::nil)
+					event_keyDown(SCREEN_WIDTH, SCREEN_HEIGHT);
+				else
+					std::cout << "event_windowResize not registered\n";
 			}
 		if (e.type == SDL_MOUSEMOTION) {
 			int x, y;
 			SDL_GetMouseState(&x, &y);
+			lua->exec("if event_mouseMotion ~= nil then event_mouseMotion(" + std::to_string(x) + "," + std::to_string(y) + ") end");
 		}
 		if (e.type == SDL_MOUSEBUTTONDOWN) {
 			std::string k = "null";
@@ -131,38 +171,51 @@ void Mya::update() {
 				k = "null";
 				break;
 			}
+
+			sol::function event_mouseButtonDown = lua->lua["event_mouseButtonDown"];
+			if (event_mouseButtonDown != sol::nil)
+				event_mouseButtonDown(k);
+			else
+				std::cout << "event_mouseButtonDown not registered\n";
 		}
 		if (e.type == SDL_MOUSEBUTTONUP) {
 			std::string k = "null";
 
 			switch (e.button.button) {
-				case SDL_BUTTON_LEFT:
-					k = "left";
-					break;
-				case SDL_BUTTON_RIGHT:
-					k = "right";
-					break;
-				case SDL_BUTTON_MIDDLE:
-					k = "middle";
-					break;
-				case SDL_BUTTON_X1:
-					k = "mouse4";
-					break;
-				case SDL_BUTTON_X2:
-					k = "mouse5";
-					break;
-				default:
-					k = "null";
-					break;
+			case SDL_BUTTON_LEFT:
+				k = "left";
+				break;
+			case SDL_BUTTON_RIGHT:
+				k = "right";
+				break;
+			case SDL_BUTTON_MIDDLE:
+				k = "middle";
+				break;
+			case SDL_BUTTON_X1:
+				k = "mouse4";
+				break;
+			case SDL_BUTTON_X2:
+				k = "mouse5";
+				break;
+			default:
+				k = "null";
+				break;
 			}
+
+			sol::function event_mouseButtonDown = lua->lua["event_mouseButtonUp"];
+			if (event_mouseButtonDown != sol::nil)
+				event_mouseButtonDown(k);
+			else
+				std::cout << "event_mouseButtonUp not registered\n";
 		}
 		if (e.type == SDL_MOUSEBUTTONUP) {
-			
+
 		}
 		if (e.type == SDL_MOUSEWHEEL) {
 
 		}
 	}
+	lua->exec("if event_update ~= nil then event_update() end");
 }
 
 void Mya::render() {
@@ -170,14 +223,17 @@ void Mya::render() {
 	fps.frames++;
 	SDL_RenderClear(renderer);
 
-	sprite->render(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
-	tv->setText("FPS: " + std::to_string(fps.fps), renderer);
-	tv->render(renderer);
+	lua->exec("if event_render ~= nil then event_render() end");
 
 	SDL_RenderPresent(renderer);
+
+#ifdef __EMSCRIPTEN__
+	emscripten_sleep(0);
+#endif
 }
 
 void Mya::exit() {
+	lua->exec("if event_quit ~= nil then event_quit() end");
 	run = false;
 }
 
@@ -196,6 +252,7 @@ void Mya::close() {
 
 	Mix_Quit();
 	IMG_Quit();
+	SDLNet_Quit();
 	SDL_Quit();
 }
 
@@ -208,13 +265,20 @@ void Mya::setFullscreen(bool b) {
 		osh = getHeight();
 		SDL_SetWindowSize(window, DM.w, DM.h);
 		SDL_GetWindowSize(window, &SCREEN_WIDTH, &SCREEN_HEIGHT);
-		//SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
-	} else {
-		//SDL_SetWindowFullscreen(window, SDL_WINDOW_FOREIGN);
+		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+	}
+	else {
+		SDL_SetWindowFullscreen(window, SDL_WINDOW_FOREIGN);
 		SDL_SetWindowSize(window, osw, osh);
 		SDL_GetWindowSize(window, &SCREEN_WIDTH, &SCREEN_HEIGHT);
 	}
 	fullscreen = b;
+
+	sol::function event_keyDown = lua->lua["event_windowResize"];
+	if (event_keyDown != sol::nil)
+		event_keyDown(SCREEN_WIDTH, SCREEN_HEIGHT);
+	else
+		std::cout << "event_windowResize not registered\n";
 }
 
 bool Mya::getFullscreen() {
@@ -229,7 +293,7 @@ SDL_Renderer* Mya::getRenderer() {
 	return renderer;
 }
 
-void Mya::setWindowTitle(std::string text){
+void Mya::setWindowTitle(std::string text) {
 	SDL_SetWindowTitle(window, text.c_str());
 }
 
@@ -254,7 +318,7 @@ int Mya::getHeight()
 
 std::string Mya::getPath()
 {
-	return "";
+	return (std::string)"";
 }
 
 void Mya::setRenderDrawColor(int r, int g, int b, int a)
@@ -262,8 +326,8 @@ void Mya::setRenderDrawColor(int r, int g, int b, int a)
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);
 }
 
-void Mya::setIsOnTop(bool onTop){
-	SDL_SetWindowGrab(window, (SDL_bool) onTop);
+void Mya::setIsOnTop(bool onTop) {
+	SDL_SetWindowGrab(window, (SDL_bool)onTop);
 }
 
 std::string Mya::getVersion() {
@@ -310,7 +374,7 @@ float Mya::getDelta()
 }
 
 void* Mya::lua_getRenderer() {
-	return (void*) renderer;
+	return (void*)renderer;
 }
 
 Mya* Mya::getMya() {

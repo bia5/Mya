@@ -57,6 +57,9 @@
     <ClCompile Include="Mya\Lua\Lua.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Mya\Network\Network.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mya\Graphics\Font.h">
@@ -105,6 +108,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Mya\Lua\Lua.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mya\Network\Network.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

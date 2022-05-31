@@ -3,13 +3,14 @@
 #include "../Mya.h"
 #include "../Assets.h"
 #include "../Graphics/Texture.h"
+#include "../Network/Network.h"
 #include "../Graphics/Sprite.h"
 #include "../Graphics/Font.h"
 #include "../Graphics/TextView.h"
 #include "../Sound/Sound.h"
 #include "../Sound/Music.h"
 #include "../Graphics/Animation.h"
-//#include "../Utils/FileHandler.h"
+#include "../Utils/FileHandler.h"
 
 Lua::Lua() {
 	lua.open_libraries();
@@ -110,7 +111,7 @@ void Lua::loadGraphics() {
 		"isFinished", &Animation::isFinished,
 		"reset", &Animation::reset);
 
-	/*lua.new_usertype<FileHandler>("FileHandler",
+	lua.new_usertype<FileHandler>("FileHandler",
 		sol::constructors<FileHandler()>(),
 		"listDir", &FileHandler::listDir,
 		"getSize", &FileHandler::getSize,
@@ -118,7 +119,51 @@ void Lua::loadGraphics() {
 		"dirExists", &FileHandler::dirExists,
 		"fileExists", &FileHandler::fileExists,
 		"createDir", &FileHandler::createDir,
-		"createFile", &FileHandler::createFile);*/
+		"createFile", &FileHandler::createFile);
+}
+
+void Lua::loadNetwork() {
+	lua.new_usertype<Network>("Network",
+		sol::constructors<Network()>(),
+		"init", &Network::init,
+		"update", &Network::lua_update,
+		"sendMessage", &Network::sendMessage,
+		"broadcast", &Network::broadcast,
+		"allocPacket", &Network::allocPacket,
+		"refreshIP", &Network::refreshIP,
+		"refreshPing", &Network::refreshPing,
+		"isIPRegistered", &Network::isIPRegistered,
+		"getIPLoc", &Network::getIPLoc,
+		"kickIP", &Network::kickIP,
+		"getIP", &Network::getIP,
+		"getPing", &Network::getPing,
+		"setServerName", &Network::setServerName,
+		"getServerName", &Network::getServerName,
+		"setServerPort", &Network::setServerPort,
+		"getServerPort", &Network::getServerPort,
+		"setIsServer", &Network::setIsServer,
+		"getIsServer", &Network::getIsServer,
+		"getPacketSize", &Network::getPacketSize,
+		"setPacketAmt", &Network::setPacketAmt,
+		"getPacketAmt", &Network::getPacketAmt,
+		"setDebugMode", &Network::setDebugMode,
+		"getDebugMode", &Network::getDebugMode,
+		"setMaxClients", &Network::setMaxClients,
+		"getMaxClients", &Network::getMaxClients,
+		"getClientCount", &Network::getClientCount,
+		"getTotalPacketsSent", &Network::getTotalPacketsSent,
+		"getTotalPacketsRecv", &Network::getTotalPacketsRecv,
+		"getTotalBitsSent", &Network::getTotalBitsSent,
+		"getTotalBitsRecv", &Network::getTotalBitsRecv,
+		"getTimedPacketsSent", &Network::getTimedPacketsSent,
+		"getTimedPacketsRecv", &Network::getTimedPacketsRecv,
+		"getTimedBitsSent", &Network::getTimedBitsSent,
+		"getTimedBitsRecv", &Network::getTimedBitsRecv,
+		"getDataFromClientMessage", &Network::getDataFromClientMessage,
+		"getIPFromClientMessage", &Network::getIPFromClientMessage,
+		"setPort", &Network::setPort,
+		"getPort", &Network::getPort,
+		"close", &Network::close);
 }
 
 void Lua::loadAudio() {
