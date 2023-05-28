@@ -1,6 +1,7 @@
 dep-windows/
 Release/
 assets/
+worlds/
 sol/
 .vs/
 lua/

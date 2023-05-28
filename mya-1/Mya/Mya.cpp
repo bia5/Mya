@@ -318,7 +318,10 @@ int Mya::getHeight()
 
 std::string Mya::getPath()
 {
+#ifdef __EMSCRIPTEN__
 	return (std::string)"";
+#endif
+	return (std::string)SDL_GetBasePath();
 }
 
 void Mya::setRenderDrawColor(int r, int g, int b, int a)
