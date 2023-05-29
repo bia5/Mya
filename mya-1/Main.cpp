@@ -1,14 +1,19 @@
+#ifndef __EMSCRIPTEN__
 #include <iostream>
 #include <Windows.h>
+#endif
 
 #include "Mya\Mya.h"
 
 int main(int argc, char* argv[]) {
+#ifndef __EMSCRIPTEN__
 	srand(time(NULL));
+#endif
 
 	static Mya mya;
 	mya.initLua();
 
+#ifndef __EMSCRIPTEN__
 	ShowWindow(GetConsoleWindow(), SW_HIDE);
 
 	for (int i = 1; i < argc; ++i) {
@@ -22,6 +27,7 @@ int main(int argc, char* argv[]) {
 			ShowWindow(GetConsoleWindow(), SW_SHOW);
 		}
 	}
+#endif
 
 	sol::load_result lr = mya.lua->lua.load_file("lua/main.lua");
 	if (!lr.valid()) {

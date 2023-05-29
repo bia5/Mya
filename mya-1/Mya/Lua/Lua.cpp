@@ -49,18 +49,6 @@ void Lua::loadMya(Mya* mya) {
 	lua.set_function("mya_setIsOnTop", &Mya::setIsOnTop, mya);
 }
 
-void Lua::loadMya_t() { //This is kinda useless... This needs a revison!
-	lua.new_usertype<Mya>("Mya",
-		"init", &Mya::init,
-		"update", &Mya::update,
-		"render", &Mya::render,
-		"exit", &Mya::exit,
-		"isRunning", &Mya::isRunning,
-		"close", &Mya::close,
-		"setFullscreen", &Mya::setFullscreen,
-		"getFullscreen", &Mya::getFullscreen);
-}
-
 void Lua::loadGraphics() {
 	lua.new_usertype<Texture>("Texture",
 		sol::constructors<Texture(), Texture(std::string, Mya*)>(),
