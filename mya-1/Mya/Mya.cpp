@@ -102,7 +102,7 @@ bool Mya::init(std::string title, int w, int h) {
 
 void Mya::update() {
 	overall += (std::clock() - timer);
-	while (overall >= timepertick) {
+	if (overall >= timepertick) {
 		overall -= timepertick;
 		lua->exec("if event_tupdate ~= nil then event_tupdate() end");
 	}
