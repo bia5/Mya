@@ -3,6 +3,7 @@ Release/
 .vs/
 Assets/
 lua/
+worlds/
 mya-1/MyaWeb.wasm
 mya-1/MyaWeb.js
 mya-1/MyaWeb.html

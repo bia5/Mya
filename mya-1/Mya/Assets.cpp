@@ -4,7 +4,12 @@
 
 Assets::Assets(Mya* _mya) {
 	mya = _mya;
+
+#ifdef __EMSCRIPTEN__
+	std::string p = "";
+#else
 	std::string p = SDL_GetBasePath();
+#endif
 }
 
 bool Assets::loadTexture(std::string id, std::string pathAccordingToExec) {
@@ -15,7 +20,11 @@ bool Assets::loadTexture(std::string id, std::string pathAccordingToExec) {
 			textures[i] = NULL;
 		}
 	}
+#ifdef __EMSCRIPTEN__
+	std::string p = "";
+#else
 	std::string p = SDL_GetBasePath();
+#endif
 	Object* ob = new Object();
 	ob->id = id;
 	Texture* t = new Texture(p + pathAccordingToExec, mya->getRenderer());

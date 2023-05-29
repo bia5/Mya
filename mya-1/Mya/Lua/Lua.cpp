@@ -30,6 +30,7 @@ void Lua::loadMya(Mya* mya) {
 	lua.set_function("mya_getIsServer", &Mya::getIsServer, mya);
 	lua.set_function("mya_getRenderer", &Mya::lua_getRenderer, mya); //Uses special function to work with lua (returns address of SDL_Renderer for other special lua functions to cast to)
 	lua.set_function("mya_getVersion", &Mya::getVersion, mya);
+	lua.set_function("mya_getPlatform", &Mya::getPlatform, mya);
 	lua.set_function("mya_init", &Mya::init, mya);
 	lua.set_function("mya_isRunning", &Mya::isRunning, mya);
 	lua.set_function("mya_render", &Mya::render, mya);
@@ -47,18 +48,6 @@ void Lua::loadMya(Mya* mya) {
 	lua.set_function("mya_deltaUpdate", &Mya::deltaUpdate, mya);
 	lua.set_function("mya_getDelta", &Mya::getDelta, mya);
 	lua.set_function("mya_setIsOnTop", &Mya::setIsOnTop, mya);
-}
-
-void Lua::loadMya_t() { //This is kinda useless... This needs a revison!
-	lua.new_usertype<Mya>("Mya",
-		"init", &Mya::init,
-		"update", &Mya::update,
-		"render", &Mya::render,
-		"exit", &Mya::exit,
-		"isRunning", &Mya::isRunning,
-		"close", &Mya::close,
-		"setFullscreen", &Mya::setFullscreen,
-		"getFullscreen", &Mya::getFullscreen);
 }
 
 void Lua::loadGraphics() {
