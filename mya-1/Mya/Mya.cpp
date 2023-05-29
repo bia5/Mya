@@ -399,6 +399,11 @@ void Mya::setIsOnTop(bool onTop){
 	SDL_SetWindowGrab(window, (SDL_bool) onTop);
 }
 
+std::string Mya::getPlatform()
+{
+	return PLATFORM;
+}
+
 std::string Mya::getVersion() {
 	return VERSION;
 }

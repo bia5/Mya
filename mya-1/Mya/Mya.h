@@ -17,6 +17,12 @@
 class Mya {
 public:
 	const char* VERSION = "Mya 1.6.0 Beta (Codename: Kira)";
+#ifdef __EMSCRIPTEN__
+	std::string PLATFORM = "WEB";
+#else
+	std::string PLATFORM = "DESKTOP";
+#endif
+
 	static Assets* assets;
 	static Lua* lua;
 
@@ -52,6 +58,7 @@ public:
 	void setRenderDrawColor(int, int, int, int);
 	void setIsOnTop(bool onTop);
 
+	std::string getPlatform();
 	std::string getVersion();
 	int getFps();
 	bool getIsServer();
