@@ -48,6 +48,7 @@ void Lua::loadMya(Mya* mya) {
 	lua.set_function("mya_deltaUpdate", &Mya::deltaUpdate, mya);
 	lua.set_function("mya_getDelta", &Mya::getDelta, mya);
 	lua.set_function("mya_setIsOnTop", &Mya::setIsOnTop, mya);
+	lua.set_function("mya_getTime", &Mya::getTime, mya);
 }
 
 void Lua::loadGraphics() {

@@ -447,6 +447,13 @@ float Mya::getDelta()
 	return delta;
 }
 
+long Mya::getTime()
+{
+	std::timespec ts;
+	std::timespec_get(&ts, TIME_UTC);
+	return ts.tv_nsec;
+}
+
 void* Mya::lua_getRenderer() {
 	return (void*) renderer;
 }

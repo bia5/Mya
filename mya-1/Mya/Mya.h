@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <ctime>
 #include <string>
 #include <SDL.h>
 #undef main
@@ -68,6 +69,8 @@ public:
 
 	void deltaUpdate();
 	float getDelta();
+
+	long getTime();
 
 	//Lua Compat
 	void* lua_getRenderer();
