@@ -17,7 +17,7 @@
 
 class Mya {
 public:
-	const char* VERSION = "Mya 1.6.0 Beta (Codename: Kira)";
+	const char* VERSION = "Mya 1.7.0 Beta (Codename: Squidy)";
 #ifdef __EMSCRIPTEN__
 	std::string PLATFORM = "WEB";
 #else

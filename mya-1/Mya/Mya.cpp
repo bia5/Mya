@@ -233,7 +233,11 @@ void Mya::update() {
 			
 		}
 		if (e.type == SDL_MOUSEWHEEL) {
-			
+			sol::function event_mouseButtonDown = lua->lua["event_mouseWheel"];
+			if (event_mouseButtonDown != sol::nil)
+				event_mouseButtonDown(e.wheel.y);
+			else
+				std::cout << "event_mouseWheel not registered\n";
 		}
 
 #ifndef __EMSCRIPTEN__
@@ -274,6 +278,35 @@ void Mya::update() {
 				}
 			}
 		}
+		if (e.type == SDL_JOYAXISMOTION) {
+			sol::function event_mouseButtonDown = lua->lua["event_joyAxisMotion"];
+			if (event_mouseButtonDown != sol::nil)
+				event_mouseButtonDown(e.jaxis.which,e.jaxis.axis,e.jaxis.value);
+			else
+				std::cout << "event_joyAxisMotion(joystickID, axis, value) not registered\n";
+		}
+		if (e.type == SDL_JOYBUTTONDOWN) {
+			sol::function event_mouseButtonDown = lua->lua["event_joyButtonDown"];
+			if (event_mouseButtonDown != sol::nil)
+				event_mouseButtonDown(e.jbutton.which,e.jbutton.button);
+			else
+				std::cout << "event_joyButtonDown(joystickID, button) not registered\n";
+		}
+		if (e.type == SDL_JOYBUTTONUP) {
+			sol::function event_mouseButtonDown = lua->lua["event_joyButtonUp"];
+			if (event_mouseButtonDown != sol::nil)
+				event_mouseButtonDown(e.jbutton.which, e.jbutton.button);
+			else
+				std::cout << "event_joyButtonUp(joystickID, button) not registered\n";
+		}
+		if (e.type == SDL_JOYHATMOTION) {
+			sol::function event_mouseButtonDown = lua->lua["event_joyHatMotion"];
+			if (event_mouseButtonDown != sol::nil)
+				event_mouseButtonDown(e.jhat.which, e.jhat.hat, e.jhat.value);
+			else
+				std::cout << "event_joyHatMotion(joystickID, hat, value) not registered\n";
+		}
+
 #endif
 	}
 

@@ -83,7 +83,7 @@
     <IncludePath>G:\My Drive\dep\include;$(IncludePath)</IncludePath>
     <LibraryPath>G:\My Drive\dep\lib;$(LibraryPath)</LibraryPath>
     <OutDir>..\..\Partisan</OutDir>
-    <TargetName>Mya</TargetName>
+    <TargetName>Partisan</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
